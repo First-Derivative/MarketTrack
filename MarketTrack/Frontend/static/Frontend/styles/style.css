@@ -1,0 +1,46 @@
+
+/* ONE-LINE CLASSES */
+
+.ptr{cursor: pointer;}
+.color_main{color: #61E888;}
+.color_supp{color: #419C5B;}
+
+/* OVERRIDING BOOTSTRAP */
+.nav-link 
+{
+  /* color: #47A862; */
+  color: #61E888;
+}
+
+.nav-link:hover
+{
+  cursor: pointer;
+  color: #419C5B;
+}
+
+.active{
+  color: #419C5B;
+}
+
+/* CUSTOM STYLING CSS  */
+#auth_wrapper
+{
+  border: 0.1rem solid #419C5B;
+  border-radius: 0.5rem; 
+}
+
+#auth_image
+{
+  margin-right: 1rem;
+  margin-top: 0.4rem;
+}
+
+#auth_item
+{
+  margin-bottom: 0px;
+
+  /* Padding Styling to fit with Boostrap Nav line-height */
+  padding-top: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
