@@ -20,6 +20,7 @@ html, body
 /* ONE-LINE CLASSES */
 
 .ptr{cursor: pointer;}
+.no_ptr, .no_ptr:hover{cursor: default;}
 .color_main{color: #61E888;}
 .color_supp{color: #419C5B;}
 
@@ -123,11 +124,24 @@ html, body
 #auth_item
 {
   margin-bottom: 0px;
-
-  /* Padding Styling to fit with Boostrap Nav line-height */
   padding-top: 0.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+#logout
+{
+  background-color: #61E888;
+  color: #419C5B;
+}
+
+#username, #username:hover
+{
+  color: #419C5B;
+  margin-bottom: 0rem;
+  /* line-height: 1rem; */
+  height: 0rem;
+  cursor: default;
 }
 
 #search_button

@@ -47,17 +47,21 @@
         </div>
 
         <div class="col-md-4 text-center">
-            <div class="h1 color_supp">MarketTrack</div>
+            <div class="h1 color_supp ptr" id="webTitle">MarketTrack</div>
         </div>
 
         <div class="col-md-4 text-right">
           <div class="d-flex justify-content-end">
 
             <img src="{% static '/Frontend/media/icons/user_profile.png'%}" class="rounded ptr" width="32" height="32" alt="..." id="auth_image">
-            <div class="d-flex flex-row" id="auth_wrapper">
-              
-              <div><a href="{% url 'user_login' %}" class="nav-link" id="auth_item" style="padding-right:0rem;">Login</a></div>
-              <div><a href="{% url 'user_registration' %}" class="nav-link" id="auth_item" style="padding-right:1rem;">Register</a></div>
+            <div class="no_ptr d-flex flex-row" id="auth_wrapper">
+              {% if request.user.is_authenticated %}
+                <div class="nav-link pr-0" id="auth_item" style="cursor: default"><p id="username">{{ user.username }}<p></div>
+                <div><a href="{% url 'user_logout' %}" class="nav-link" id="auth_item logout" {% comment %}style="padding-right:0rem;"{% endcomment %}>Logout</a></div>
+              {% else %}
+                <div><a href="{% url 'user_login' %}" class="nav-link" id="auth_item" style="padding-right:0rem;">Login</a></div>
+                <div><a href="{% url 'user_registration' %}" class="nav-link" id="auth_item" style="padding-right:1rem;">Register</a></div>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -71,5 +75,11 @@
 
     </div>
 
+    <!-- Declaring Variables for external script namespace access -->
+    <script>
+      let homepage_url = "{% url 'homepage' %}"
+    </script>
+
+    <script src="{% static 'Frontend/scripts/homepage_func.js'%}"></script>
   </body>
 </html>

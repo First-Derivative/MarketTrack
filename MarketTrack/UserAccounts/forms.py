@@ -8,17 +8,17 @@ from .models import UserAccount
 class RegisterForm(UserCreationForm):
   class Meta:
     model = UserAccount
-    fields = ("email", "username", "password1", "password2")
-
-  email = forms.CharField(max_length=50, widget=forms.EmailInput(attrs={
-    "placeholder": "jacque@webster.com",
-    "class": "form-control std_input",
-    }))
+    fields = ("username", "email" , "password1", "password2")
 
   username = forms.CharField(max_length=30, help_text="This is what you'll use to login",widget=forms.TextInput(attrs={
   "placeholder": "RockstarJeans3500",
   "class": "form-control std_input",
   }))
+
+  email = forms.CharField(max_length=50, widget=forms.EmailInput(attrs={
+    "placeholder": "jacque@webster.com",
+    "class": "form-control std_input",
+    }))
 
   password1 = forms.CharField(widget=forms.PasswordInput(attrs={
   "placeholder": "Password",
