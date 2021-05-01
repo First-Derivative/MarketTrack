@@ -64,3 +64,7 @@ def userLogin(request):
   else:
     context['login_form'] = LoginForm()
   return render(request, "UserAccounts/login.html", context)
+
+def userLogout(request):
+  logout(request)
+  return redirect("homepage")
