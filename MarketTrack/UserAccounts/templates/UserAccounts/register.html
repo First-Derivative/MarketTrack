@@ -1,0 +1,39 @@
+{% extends "Frontend/base.html" %}
+
+{% block content %}
+
+<div class="row">
+
+<div class="col-md-3"></div>
+
+<div class="col-md-6">
+  <form method="POST">
+    {% csrf_token %}
+
+    {% for field in registration_form %}
+    <div class="form-group">
+      {{field.label_tag}}
+
+      {{field}}
+
+      {% if field.help_text %}
+        <small id="{{field.label}}_helptext" class="form-text text-muted">{{ field.help_text }}</small>
+      {% endif %}
+
+      {% for error in field.errors %}
+        <p id="{{field.label}}_error" class="form-text text-danger">{{ error }}</p>
+      {% endfor %}
+    </div>
+    {% endfor %}
+    
+    <div class="text-center pt-3">
+      <button type="submit" class="btn std_button " id="register_button">Register</button>
+    </div>
+  
+  </form>
+</div>
+
+<div class="col-md-3"></div>
+</div>
+
+{% endblock %}

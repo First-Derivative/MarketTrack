@@ -25,6 +25,9 @@ html, body
 
 .invert_img {filter: invert(1);}
 .force_margin_5{margin-top:5rem !important;}
+.force_margin_3{margin-top:3rem !important;}
+
+.std_input:focus::placeholder {color: transparent;}
 
 /* OVERRIDING BOOTSTRAP */
 
@@ -95,6 +98,12 @@ html, body
 
 .std_button
 {
+  background-color: #61E888;
+  color: white;
+}
+
+.std_button:hover
+{
   background-color: #419C5B;
   color: white;
 }
@@ -141,15 +150,36 @@ html, body
   color: transparent;
 }
 
-#track_content
-{
-  /* padding-top:  */
-}
-
 .carousel_item_wrapper
 {
   position: absolute;
   bottom: 5rem;
   left: 0rem;
   right: 0rem;
+}
+
+#register_button
+{
+  width: 7rem;
+  height: 3rem;
+}
+
+.form-group.std_input
+{
+  margin-bottom: 0rem;
+}
+
+.form-control, .form-control:focus
+{
+  color: #419C5B;
+}
+
+.std_input::placeholder
+{
+  color: #61E888;
+}
+
+label 
+{
+  color: #419C5B;
 }
