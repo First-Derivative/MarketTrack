@@ -33,7 +33,7 @@ html, body
 /* OVERRIDING BOOTSTRAP */
 
 .fill { 
-  min-height: 100%;
+  min-height: 80rem;
   height: 100%;
 }
 
@@ -144,10 +144,6 @@ html, body
   cursor: default;
 }
 
-#search_button
-{
-  background-color: #61E888;
-}
 
 #search_bar
 {
@@ -157,7 +153,7 @@ html, body
 #search_bar::placeholder
 {
   color: #419C5B;
-  opacity: 0.8;
+  opacity: 0.65;
 }
 
 #search_bar:focus::placeholder {

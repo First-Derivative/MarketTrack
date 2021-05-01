@@ -57,7 +57,7 @@ def userLogin(request):
       user = authenticate(username=username, password=password)
       if(user):
         login(request, user)
-    
+        return redirect("homepage")
     else:
       messages.info(request, "Incorrect Credentials")
       return redirect("user_login")

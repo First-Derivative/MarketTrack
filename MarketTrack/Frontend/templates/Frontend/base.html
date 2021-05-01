@@ -40,9 +40,12 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Collections</a>
               </li>
+              {% if user.is_admin %}
               <li class="nav-item">
                 <a class="nav-link" href="#" >Stats</a>
               </li>
+              {% else %}
+              {% endif %}
             </ul>
         </div>
 
@@ -53,7 +56,7 @@
         <div class="col-md-4 text-right">
           <div class="d-flex justify-content-end">
 
-            <img src="{% static '/Frontend/media/icons/user_profile.png'%}" class="rounded ptr" width="32" height="32" alt="..." id="auth_image">
+            <img src="{% static '/Frontend/media/icons/user_profile.png'%}" class="rounded ptr" width="32" height="32" alt="..." id="auth_image" style="visibility: hidden;"> 
             <div class="no_ptr d-flex flex-row" id="auth_wrapper">
               {% if request.user.is_authenticated %}
                 <div class="nav-link pr-0" id="auth_item" style="cursor: default"><p id="username">{{ user.username }}<p></div>
@@ -77,9 +80,13 @@
 
     <!-- Declaring Variables for external script namespace access -->
     <script>
-      let homepage_url = "{% url 'homepage' %}"
+
+      // Redirect to homepage from clicking title
+      $("#webTitle").click(function() {
+        location.href = "{% url 'homepage' %}"
+      })
     </script>
 
-    <script src="{% static 'Frontend/scripts/homepage_func.js'%}"></script>
+    
   </body>
 </html>

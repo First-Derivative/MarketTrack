@@ -11,8 +11,8 @@
   <div class="col-md-10">
     <p class="color_main text-center">Search for your next PC hardware item and track it!</p>
     <div class="input-group rounded search_bar_wrapper">
-      <input type="search" class="form-control rounded py-4 " id="search_bar" placeholder="RTX 3090 Founders Edition"/>
-      <span class="btn border-0" id="search_button">
+      <input type="search" class="form-control rounded py-4 " id="search_bar" placeholder="RTX 3090 Founders Edition..."/>
+      <span class="btn border-0 std_button" id="search_button">
         <img src="{% static '/Frontend/media/icons/search.png'%}" class="fas fa-search pt-1 invert_img">
       </span>
     </div>
@@ -26,23 +26,10 @@
 <!-- Search Results Entry -->
 
 <div class="row mt-4" id="search_results_row" >
-<!--
-  <div class="col-md px-4">
   
-
-    <div class="card results_card">
-      {% comment %} <img class="card-img-top result_card_img" src="{% static '/Frontend/media/images/card_test.jpg1' %}" alt="Card image cap"> {% endcomment %}
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn std_button">Go somewhere</a>
-      </div>
-    </div>
-
-  </div> -->
-  
-  <div class="col-md w-75">
-    <h5 class="color_supp" style="margin-left: 5.7rem;">Results...</h5>
+  <div class="col-md-1"></div> <!-- Empty for Spacing -->
+  <div class="col-md-10">
+    <h5 class="color_supp" >Results...</h5>
     <div class="carousel slide" id="results_carousel" data-ride="carousel">
 
       <!-- Carousel Indicators --> 
@@ -86,6 +73,7 @@
     </div>
   </div>
 
+  <div class="col-md-1"></div> <!-- Empty for Spacing -->
 </div>
 
 <!-- Tracked/Collection Display -->
@@ -94,15 +82,15 @@
   <div class="col-md">
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link active info_tab" aria-current="page" href="#">Tracked Items</a>
+        <a class="nav-link active info_tab" id="tracked_display">Tracked Items</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link info_tab" href="#">Collections</a>
+        <a class="nav-link info_tab" id="collections_display">Collections</a>
       </li>
     </ul>
 
     <div class="py-3"id="track_content">
-      <ol>
+      {% comment %} <ol>
         <li>Coffee</li>
         <li>Tea</li>
         <li>Milk</li>
@@ -118,7 +106,7 @@
         <li>Coffee</li>
         <li>Tea</li>
         <li>Milk</li>
-      </ol>  
+      </ol>   {% endcomment %}
     </div>
 
     <div id="collection_content"> 
@@ -131,6 +119,6 @@
 <div>
 
 
-
+<script src="{% static 'Frontend/scripts/homepage_func.js'%}"></script>
 
 {% endblock content %}
