@@ -56,8 +56,8 @@
             <img src="{% static '/Frontend/media/icons/user_profile.png'%}" class="rounded ptr" width="32" height="32" alt="..." id="auth_image">
             <div class="d-flex flex-row" id="auth_wrapper">
               
-              <div class="nav-link" id="auth_item" style="padding-right:0rem;">Login</div>
-              <div><a href="{% url 'user_registration' %}" class="nav-link" id="auth_item">Register</a></div>
+              <div><a href="{% url 'user_login' %}" class="nav-link" id="auth_item" style="padding-right:0rem;">Login</a></div>
+              <div><a href="{% url 'user_registration' %}" class="nav-link" id="auth_item" style="padding-right:1rem;">Register</a></div>
             </div>
           </div>
         </div>
