@@ -7,11 +7,13 @@ body
 
 html, body
 {
-  height:100%;
+  height:100vh;
 }
 
 .container
 {
+  height:100vh;
+  overflow: auto;
   background-color: white;
 }
 
@@ -37,15 +39,64 @@ html, body
 
 .nav-link:hover{  cursor: pointer;  color: #419C5B;  }
 
-.active{  color: #419C5B;  }
+.active_nav{
+  color: #419C5B;
+  text-decoration: underline 0.15rem #419C5B;
+}
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{color: #419C5B;  }
+
+.carousel-indicators li {
+  background-color: #6aa77b;
+}
+
+
+.carousel-indicators .active{
+  background-color: #419C5B;
+}
+
+.carousel-item-next, .carousel-item-prev, .carousel-item.active
+{
+  height: 20rem;
+  /* background-color: grey; */
+  /* position: relative; */
+}
+
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23419C5B' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23419C5B' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+}
 
 /* CUSTOM STYLING CSS  */
 
 .info_tab
 {
   color:#61E888;
+}
+
+.results_card
+{
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width:18rem;
+  margin-top: 2rem;
+}
+
+.result_card_img
+{
+  height: 32px;
+  width: 32px;
+}
+
+.std_button
+{
+  background-color: #419C5B;
+  color: white;
 }
 
 #auth_wrapper
@@ -73,4 +124,32 @@ html, body
 #search_button
 {
   background-color: #61E888;
+}
+
+#search_bar
+{
+  color: #419C5B;
+}
+
+#search_bar::placeholder
+{
+  color: #419C5B;
+  opacity: 0.8;
+}
+
+#search_bar:focus::placeholder {
+  color: transparent;
+}
+
+#track_content
+{
+  /* padding-top:  */
+}
+
+.carousel_item_wrapper
+{
+  position: absolute;
+  bottom: 5rem;
+  left: 0rem;
+  right: 0rem;
 }
