@@ -12,20 +12,15 @@ function getTrackedItems(obj) {
     type: "GET",
     url: getTracked_api,
     success: function(response){
-
-      if(response.hasOwnProperty("noItems"))
-      {
-        $("#tracked_content").append(user_no_tracked_items_div)
-        console.log("TRACKED")
-      }
+      if(response.hasOwnProperty("noItems")){$("#tracked_content").append(user_no_tracked_items_div)}
       if(response.hasOwnProperty("noUser")){$("#tracked_content").append(unlogged_user_content_div)}
 
+      console.log(response.tracked_items)
     },
     error: function(jqXHR, textStatus, errorThrown){
       alert("textStatus: " + textStatus + " " + errorThrown)
     }
   })
-
 }
 
 // Homepage: collection_display request
@@ -44,5 +39,4 @@ function getCollections(obj) {
       alert("textStatus: " + textStatus + " " + errorThrown)
     }
   })
-
 }

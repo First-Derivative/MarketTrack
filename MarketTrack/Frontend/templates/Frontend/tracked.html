@@ -1,0 +1,22 @@
+{% extends 'Frontend/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-10 ml-3">
+    <h4 class="color_supp">Your Tracked Items</h4>
+  </div>
+</div>
+
+<div class="d-flex justify-content-between" id="RESULTS">
+
+</div>
+
+<script>
+  let page = "tracked"
+  let getTracked_api = "{% url 'getTracked_api' %}"
+</script>
+<script src="{% static 'Frontend/scripts/tracked_ajax_requests.js'%}"></script>
+
+{% endblock content %}

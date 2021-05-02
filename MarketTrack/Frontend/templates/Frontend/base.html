@@ -24,7 +24,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
 
     <!-- App Container -->
-    <div class="container py-3 px-5 rounded fill">
+    <div class="container py-3 px-5 rounded fill" id="app">
 
       <!-- NavBar -->
       <div class="row my-5"> 
@@ -32,13 +32,13 @@
         <div class="col-md-4 text-right">
             <ul class="nav">
               <li class="nav-item">
-                <a class="nav-link {% if request.path == '/homepage' %}active_nav{% else %}{% endif %}" aria-current="page" href="{% url 'homepage' %}">Home</a>
+                <a class="nav-link {% if request.path == '/' %}active_nav{% else %}{% endif %}" aria-current="page" href="{% url 'homepage' %}">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Tracked</a>
+                <a class="nav-link {% if request.path == '/tracked' %}active_nav{% else %}{% endif %}" href="{% url 'tracked_page' %}">Tracked</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Collections</a>
+                <a class="nav-link {% if request.path == '/collections' %}active_nav{% else %}{% endif %}" href="{% url 'collections_page' %}">Collections</a>
               </li>
               {% if user.is_admin %}
               <li class="nav-item">

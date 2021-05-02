@@ -1,0 +1,18 @@
+{% extends 'Frontend/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content">
+
+</div>
+
+
+<script>
+  $(".content").append("<div class='data1'><h4> DATA </h4></div>")
+  identifier = "data" + 1
+  console.log(identifier)
+  $(identifier).append("<div><h4> DATA2 </h4></div>")
+  {% comment %} $(".data").append("<h4> DATA2 </h4>") {% endcomment %}
+</script>
+{% endblock content %}
