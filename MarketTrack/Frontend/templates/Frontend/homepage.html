@@ -9,7 +9,7 @@
   <div class="col-md-1"></div> <!-- Empty for Spacing -->
 
   <div class="col-md-10">
-    <p class="color_main text-center">Search for your next PC hardware item and track it!</p>
+    <p class="{% comment %}color_main{% endcomment %} text-center">Search for your next PC hardware item and track it!</p>
     <div class="input-group rounded search_bar_wrapper">
       <input type="search" class="form-control rounded py-4 " id="search_bar" placeholder="RTX 3090 Founders Edition..."/>
       <span class="btn border-0 std_button" id="search_button">
@@ -25,7 +25,7 @@
 
 <!-- Search Results Entry -->
 
-<div class="row mt-4" id="search_results_row" >
+<div class="row mt-4 hidden" id="search_results_row" >
   
   <div class="col-md-1"></div> <!-- Empty for Spacing -->
   <div class="col-md-10">
@@ -41,17 +41,10 @@
       <div class="carousel-inner" id="carousel_wrapper">
         <div class="carousel-item active">
           <div class="carousel_item_wrapper text-center">
-
-<div class="card results_card text-center ml-5">
-  <div class="card-body" id="item_card_wrapper">
-  <h5 class="card-title" id="item_title">${item.name}</h5>
-  <p class="card-text pl-1 text-left" id="item_price">Price: &pound;${item.price}</p>
-  <p class="card-text pl-1 text-left" id="item_stock_avail">Stock Availability: ${item.stock_bool}</p>
-  <p class="card-text pl-1 text-left small" id="item_timestamp">Last Checked: ${item.timestamp}</p>
-  <a href="${item.source}" class="btn std_button mt-2" id="item_source">View on their site</a>
-  </div>
-</div>
-
+            <h3> Item1</h3>
+            <p> Data1 </p>
+            <p> Data1 </p>
+            <a href="#" class="btn std_button"> Source</a>
           </div>
         </div>
 
@@ -84,25 +77,19 @@
 </div>
 
 <!-- Tracked/Collection Display -->
-<div class="row" id="track_collec_row" style="margin-top:3rem;">
+<div class="row" id="track_collec_row" style="margin-top:4rem;">
 
   <div class="col-md">
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs ml-4" id="tracked_tab">
       <li class="nav-item">
         <a class="nav-link active info_tab" id="tracked_display">Tracked Items</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link info_tab" id="collections_display">Collections</a>
       </li>
     </ul>
 
     <div class="py-3" id="tracked_content">
-
+      <small class="pt-5 pl-1 ml-4 {% comment %}color_main{% endcomment %}" style="font-style: italic">View your tracked items at a glance, extra functionality can be found on the Tracked page</small>
     </div>
 
-    <div class="py-3 hidden" id="collections_content"> 
-
-    </div>
   <div>
 
 <div>

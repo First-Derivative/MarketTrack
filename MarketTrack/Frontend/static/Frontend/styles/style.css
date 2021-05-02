@@ -85,23 +85,20 @@ html, body
 .carousel_item_wrapper
 {
   position: relative;
+  top:7rem;
 }
 
 .results_card
 {
-  position: absolute;
   width:17rem;
   height: 15rem;
-  top: 50%;
-  left: 50%;
-  /* transform: translate(-50%, 50%); */
-  margin-top: 2rem;
+  margin-right: 2rem;
 }
 
 .item_card
 {
   width:17rem;
-  height: 15rem;
+  height: 18rem;
   margin-right: 2rem;
   
 }
@@ -122,6 +119,11 @@ html, body
 {
   background-color: #419C5B;
   color: white;
+}
+
+#item_delete_general
+{
+
 }
 
 #auth_wrapper
@@ -189,15 +191,19 @@ html, body
   height: 3rem;
 }
 
+#tracked_tab
+{
+  width: 94%;
+}
+
 .item_delete_button
 {
-  background-color: red;
   color: white;
+  width: 95%;
 }
 
 .item_delete_button:hover
 {
-  background-color: darkred;
   color: white;
 }
 

@@ -8,12 +8,13 @@ unlogged_user_content_div = "<div class='p-5 text-center'><p class='color_supp'>
 // <p class="card-text pl-1 text-left" id="item_stock_avail">Item Source: ${item.abstract_source}</p>
 function buildItemCard(item)
 {
-  item_card = `<div class="card item_card text-center ml-5">
+  item_card = `<div class="card results_card text-center ml-5">
   <div class="card-body" id="item_card_wrapper">
   <h5 class="card-title" id="item_title">${item.name}</h5>
   <p class="card-text pl-1 text-left" id="item_price">Price: &pound;${item.price}</p>
   <p class="card-text pl-1 text-left" id="item_stock_avail">Stock Availability: ${item.stock_bool}</p>
   <p class="card-text pl-1 text-left small" id="item_timestamp">Last Checked: ${item.timestamp}</p>
+  <a class="btn mt-2 stats_button btn-secondary" id="stats_${item.id}">Stats</a>
   <a href="${item.source}" class="btn std_button mt-2" id="item_source">View on their site</a>
   </div>
   </div>`

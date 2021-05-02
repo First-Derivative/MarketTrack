@@ -14,8 +14,12 @@ function buildItemCard(item,id)
   <p class="card-text pl-1 text-left" id="item_price_${item.id}">Price: &pound;${item.price}</p>
   <p class="card-text pl-1 text-left" id="item_stock_avail_${item.id}">Stock Availability: ${item.stock_bool}</p>
   <p class="card-text pl-1 text-left small" id="item_timestamp_${item.id}">Last Checked: ${item.timestamp}</p>
-  <a data-toggle="modal" data-target="#delete_modal_${item.id}" class="btn mt-2 item_delete_button" id="delete_button_${item.id}">Delete</a>
+  
+  <div>
+  <a class="btn mt-2 stats_button btn-secondary" id="stats_${item.id}">Stats</a>
   <a href="${item.source}" class="btn std_button mt-2" id="item_source">View on their site</a>
+  </div>
+  <a data-toggle="modal" data-target="#delete_modal_${item.id}" class="btn mt-2 item_delete_button btn-danger" id="delete_button_${item.id}">Delete</a>
   </div>
   </div>`
 
@@ -27,12 +31,12 @@ function buildDeleteFunc(item)
   <div class="modal-dialog">
     <div class="modal-content modal_delete">
       <div class="modal-header text-center">
-        <h5 class="modal-title text-center" id="modal_label_${item.id}">Are you sure?</h5>
+        <h5 class="modal-title text-center pl-2" id="modal_label_${item.id}">Are you sure?</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body text-left pb-0">
+      <div class="modal-body text-left p-4 pb-0">
         <span class="text-danger">Deleting:  ${item.name} </span> 
         <br>
         <br>

@@ -37,9 +37,6 @@
               <li class="nav-item">
                 <a class="nav-link {% if request.path == '/tracked' %}active_nav{% else %}{% endif %}" href="{% url 'tracked_page' %}">Tracked</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link {% if request.path == '/collections' %}active_nav{% else %}{% endif %}" href="{% url 'collections_page' %}">Collections</a>
-              </li>
               {% if user.is_admin %}
               <li class="nav-item">
                 <a class="nav-link" href="#" >Stats</a>
