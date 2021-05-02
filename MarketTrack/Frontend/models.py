@@ -4,21 +4,19 @@ from UserAccounts.models import UserAccount
 # from django.utils import timezone
 from datetime import datetime
 
-'''
 class AbstractSourceChoice(models.TextChoices):
     AMAZON = ("AZ", "Amazon")
     CURRYS = ("CU", "Currys")
     EBAY = ("EB", "Ebay")
     NEWEGG = ("NE","NewEgg")
-'''
 
 class Item(models.Model):
     '''
         Class Description
     '''
     name = models.CharField(max_length=80)
-    source = models.CharField(max_length=200) #closest unique identifier: URL for item page
-    # abstract_source = models.CharField(max_length=10, choices=AbstractSourceChoice.choices, default=AbstractSourceChoice.AMAZON)
+    source = models.CharField(max_length=200, default="LINK") 
+    abstract_source = models.CharField(max_length=10, choices=AbstractSourceChoice.choices, default=AbstractSourceChoice.CURRYS)
     price = models.FloatField()
     stock_bool = models.BooleanField(default=True)
     stock_no = models.IntegerField(null=True, blank=True, default=-1)
@@ -46,10 +44,12 @@ class PermanentTrack(models.Model):
     '''
     item = models.ForeignKey(Item, null=True,on_delete=models.SET_NULL)
     price = models.FloatField()
+    source = models.CharField(max_length=200, default="LINK")
+    abstract_source = models.CharField(max_length=10, choices=AbstractSourceChoice.choices, default=AbstractSourceChoice.CURRYS)
     stock_bool = models.BooleanField(default=True)
     stock_no = models.IntegerField(null=True, blank=True, default=-1)
     timestamp = models.DateTimeField(verbose_name="Last Checked Timestamp", auto_now=False, auto_now_add=False, default=datetime.now)
     
     class Meta:
-        verbose_name = 'PermanentTrack'
-        verbose_name_plural = 'PermanentTracks'
+        verbose_name = 'Permanently Tracked Item'
+        verbose_name_plural = 'Permanently Tracked Items'
