@@ -27,9 +27,12 @@
 {% endif %}
 
 <script>
+  let token = "{{csrf_token}}"
   let page = "tracked"
   let getTracked_api = "{% url 'getTracked_api' %}"
+  let deleteTrackedItem_api = "{% url 'deleteTrackedItems_api' 0 %}"
 </script>
+
 <script src="{% static 'Frontend/scripts/tracked_ajax_requests.js'%}"></script>
 
 {% endblock content %}

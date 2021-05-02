@@ -34,7 +34,7 @@ html, body
 /* OVERRIDING BOOTSTRAP */
 
 .fill { 
-  min-height: 80rem;
+  min-height: 90rem;
   height: 100%;
 }
 
@@ -62,7 +62,7 @@ html, body
 
 .carousel-item-next, .carousel-item-prev, .carousel-item.active
 {
-  height: 20rem;
+  height: 24rem;
   /* background-color: grey; */
   /* position: relative; */
 }
@@ -82,13 +82,19 @@ html, body
   color:#61E888;
 }
 
-.results_card
+.carousel_item_wrapper
 {
   position: relative;
+}
+
+.results_card
+{
+  position: absolute;
+  width:17rem;
+  height: 15rem;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, 0%);
-  width:18rem;
+  /* transform: translate(-50%, 50%); */
   margin-top: 2rem;
 }
 
@@ -183,6 +189,18 @@ html, body
   height: 3rem;
 }
 
+.item_delete_button
+{
+  background-color: red;
+  color: white;
+}
+
+.item_delete_button:hover
+{
+  background-color: darkred;
+  color: white;
+}
+
 .form-group.std_input
 {
   margin-bottom: 0rem;
@@ -196,6 +214,12 @@ html, body
 .std_input::placeholder
 {
   color: #61E888;
+}
+
+.model-content, .modal_delete
+{
+  width: 30rem;
+  height: 17rem;
 }
 
 label 

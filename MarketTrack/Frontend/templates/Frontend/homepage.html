@@ -42,14 +42,16 @@
         <div class="carousel-item active">
           <div class="carousel_item_wrapper text-center">
 
-        <div class="card results_card text-center">
-          {% comment %} <img class="card-img-top result_card_img" src="{% static '/Frontend/media/images/card_test.jpg1' %}" alt="Card image cap"> {% endcomment %}
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn std_button">Go somewhere</a>
-          </div>
-        </div>
+<div class="card results_card text-center ml-5">
+  <div class="card-body" id="item_card_wrapper">
+  <h5 class="card-title" id="item_title">${item.name}</h5>
+  <p class="card-text pl-1 text-left" id="item_price">Price: &pound;${item.price}</p>
+  <p class="card-text pl-1 text-left" id="item_stock_avail">Stock Availability: ${item.stock_bool}</p>
+  <p class="card-text pl-1 text-left small" id="item_timestamp">Last Checked: ${item.timestamp}</p>
+  <a href="${item.source}" class="btn std_button mt-2" id="item_source">View on their site</a>
+  </div>
+</div>
+
           </div>
         </div>
 
@@ -61,23 +63,28 @@
             <a href="#" class="btn std_button"> Source</a>
           </div>
         </div>
+
       </div>
+
       <a class="carousel-control-prev" href="#results_carousel" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
       </a>
+
       <a class="carousel-control-next" href="#results_carousel" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
       </a>
+
     </div>
+
   </div>
 
   <div class="col-md-1"></div> <!-- Empty for Spacing -->
 </div>
 
 <!-- Tracked/Collection Display -->
-<div class="row" id="track_collec_row" style="margin-top:5rem;">
+<div class="row" id="track_collec_row" style="margin-top:3rem;">
 
   <div class="col-md">
     <ul class="nav nav-tabs">

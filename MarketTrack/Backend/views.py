@@ -10,6 +10,7 @@ def search_api(request, query):
 
 def serializeItem(item):
   serializedItem = {}
+  serializedItem["id"] = item.id
   serializedItem["name"] = item.name
   serializedItem["source"] = item.source
   serializedItem["price"] = item.price
@@ -19,8 +20,6 @@ def serializeItem(item):
     serializedItem["stock_bool"] = "No"
   serializedItem["stock_no"] = item.stock_no
   serializedItem["timestamp"] = item.timestamp.strftime('%H:%M %d %B, %Y')
-
-  print(serializedItem["timestamp"])
 
   return serializedItem
 
@@ -71,8 +70,20 @@ def getCollections(request):
       return JsonResponse({"noUser": "true"})
   return HttpResponseBadRequest("Invalid Request")
 
+@login_required
+def deleteTrackedItem(request, item_id):
+  if(request.method == "DELETE"):
+    user = request.user
+    try:
+      tracked_item = Tracked.objects.get(id=item_id)
+      tracked_item.delete()
+      return HttpResponse(status=200)
+    except Tracked.DoesNotExist:
+      return HttpResponseBadRequest("Invalid Item ID")
+  return HttpResponseBadRequest("Invalid Request")
+
 # 404 error handler view
-def error_handler(request):
+def error_handler(request, item_id):
   return HttpResponseBadRequest("Invalid Resource")
 
 def testView(request):

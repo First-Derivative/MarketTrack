@@ -10,14 +10,12 @@ class AbstractSourceChoice(models.TextChoices):
     CURRYS = ("CU", "Currys")
     EBAY = ("EB", "Ebay")
     NEWEGG = ("NE","NewEgg")
-    
 '''
 
 class Item(models.Model):
     '''
         Class Description
     '''
-
     name = models.CharField(max_length=80)
     source = models.CharField(max_length=200) #closest unique identifier: URL for item page
     # abstract_source = models.CharField(max_length=10, choices=AbstractSourceChoice.choices, default=AbstractSourceChoice.AMAZON)
@@ -33,7 +31,6 @@ class Tracked(models.Model):
     '''
         Class Description        
     '''
-
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
 

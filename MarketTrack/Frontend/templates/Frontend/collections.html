@@ -19,6 +19,19 @@
 
   let page = "collections"
   let getCollections_api = "{% url 'getCollections_api' %}"
+  let id = 5
+
+  function clickFunc(text)
+  {
+    console.log("clicked")
+    alert(text)
+  }
+
+  $("#collection_display").append(`<button id='confirm_button_${id}'>CLICK</button>`)
+
+  $(`#confirm_button_${id}`).on("click", function () {
+    clickFunc("steroids")
+  })
 
 </script>
 <script src="{% static 'Frontend/scripts/tracked_ajax_requests.js'%}"></script>
