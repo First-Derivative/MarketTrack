@@ -13,9 +13,14 @@ def serializeItem(item):
   serializedItem["name"] = item.name
   serializedItem["source"] = item.source
   serializedItem["price"] = item.price
-  serializedItem["stock_bool"] = item.stock_bool
+  if(item.stock_bool):
+    serializedItem["stock_bool"] = "Yes"
+  else:
+    serializedItem["stock_bool"] = "No"
   serializedItem["stock_no"] = item.stock_no
-  serializedItem["timestamp"] = item.timestamp
+  serializedItem["timestamp"] = item.timestamp.strftime('%H:%M %d %B, %Y')
+
+  print(serializedItem["timestamp"])
 
   return serializedItem
 

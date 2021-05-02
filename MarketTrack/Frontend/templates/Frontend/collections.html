@@ -3,16 +3,24 @@
 
 {% block content %}
 
-<div class="content">
+<div class="row">
+  <div class="col-md-10 ml-3">
+    <h4 class="color_supp">Your Collections</h4>
+  </div>
+</div>
+
+<div class="row d-flex justify-content-between" id="collection_display">
+
+
 
 </div>
 
-
 <script>
-  $(".content").append("<div class='data1'><h4> DATA </h4></div>")
-  identifier = "data" + 1
-  console.log(identifier)
-  $(identifier).append("<div><h4> DATA2 </h4></div>")
-  {% comment %} $(".data").append("<h4> DATA2 </h4>") {% endcomment %}
+
+  let page = "collections"
+  let getCollections_api = "{% url 'getCollections_api' %}"
+
 </script>
+<script src="{% static 'Frontend/scripts/tracked_ajax_requests.js'%}"></script>
+
 {% endblock content %}

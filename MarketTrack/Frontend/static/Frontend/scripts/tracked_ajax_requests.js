@@ -5,16 +5,16 @@ user_no_collection_div = "<div class='row py-5 text-center'> <p class='color_sup
 
 unlogged_user_content_div = "<div class='row p-5 text-center'><p class='color_supp'>Looks like you're not logged in, log in or create an account to track your items and make collections</p></div>"
 
-//style="background-image: url(https://brain-images-ssl.cdn.dixons.com/2/6/10175862/u_10175862.jpg); background-position: center;background-size: 512px 512px; background-color: black; opacity: 0.8;">
+// <p class="card-text pl-1 text-left" id="item_stock_avail">Item Source: ${item.abstract_source}</p>
 function buildItemCard(item)
 {
-  item_card = `<div class="card results_card text-center">
+  item_card = `<div class="card item_card text-center ml-5">
   <div class="card-body" id="item_card_wrapper">
   <h5 class="card-title" id="item_title">${item.name}</h5>
-  <p class="card-text" id="item_data">Data</p>
-  <p class="card-text" id="item_price">Price: &pound;${item.price}.</p>
-  <p class="card-text" id="item_timestamp">Last Checked:${item.timestamp}.</p>
-  <a href="${item.source}" class="btn std_button" id="item_source">Go somewhere</a>
+  <p class="card-text pl-1 text-left" id="item_price">Price: &pound;${item.price}</p>
+  <p class="card-text pl-1 text-left" id="item_stock_avail">Stock Availability: ${item.stock_bool}</p>
+  <p class="card-text pl-1 text-left small" id="item_timestamp">Last Checked: ${item.timestamp}</p>
+  <a href="${item.source}" class="btn std_button mt-2" id="item_source">View on their site</a>
   </div>
   </div>`
 
@@ -39,22 +39,24 @@ function getTrackedItems() {
       
       for(i = 0; i < num_of_rows; i++)
       {
-        $("#RESULTS").append(`<div class="row" id="tracked_row_${i}"></div>`)
+        $("#item_display").append(`<div class="row mt-5" id="tracked_row_${i}"></div>`)
         row_identifier = "#tracked_row_" + i
-        max = 1
+        max = 0
         item_list = []
-        test = true
-        while(test)
+        loopCond = true
+        console.log("loop no" + i)
+        while(loopCond)
         {
+          console.log("max is " + max)
           item_wireframe = content.pop()
           item = buildItemCard(item_wireframe)
           item_list.push(item)
           max += 1
-          if(content.length == 0){test = false;}
-          if(max == 3){test = false;}
+          if(content.length == 0){loopCond = false;}
+          if(max == 3){loopCond = false;}
 
         }
-        for(j = 0; j < item_list.length; j ++)
+        for(j = 0; j < item_list.length; j++)
         {
           $(row_identifier).append(item_list[j])
         }
@@ -74,8 +76,8 @@ function getCollections() {
     type: "GET",
     url: getCollections_api,
     success: function(response){
-      if(response.hasOwnProperty("noCollections")){$(".container").append(user_no_collection_div)}
-      if(response.hasOwnProperty("noUser")){$(".container").append(unlogged_user_content_div)}
+      if(response.hasOwnProperty("noCollections")){$("#collection_display").append(user_no_collection_div)}
+      if(response.hasOwnProperty("noUser")){$("#collection_display").append(unlogged_user_content_div)}
       
     },
     error: function(jqXHR, textStatus, errorThrown){

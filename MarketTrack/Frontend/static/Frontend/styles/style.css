@@ -92,6 +92,14 @@ html, body
   margin-top: 2rem;
 }
 
+.item_card
+{
+  width:17rem;
+  height: 15rem;
+  margin-right: 2rem;
+  
+}
+
 .result_card_img
 {
   height: 32px;
