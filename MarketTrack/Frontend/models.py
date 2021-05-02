@@ -52,7 +52,7 @@ class Collection(models.Model):
 
 class CollectionItems(models.Model): 
 
-    collection = models.ForeignKey('Collection', on_delete=models.CASCADE)
+    collection = models.ForeignKey('Collection', on_delete=models.CASCADE, related_name="collection_items")
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
 
     def __str__(self):

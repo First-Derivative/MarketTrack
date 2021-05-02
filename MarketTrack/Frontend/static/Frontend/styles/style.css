@@ -23,6 +23,7 @@ html, body
 .no_ptr, .no_ptr:hover{cursor: default;}
 .color_main{color: #61E888;}
 .color_supp{color: #419C5B;}
+.hidden{display: none;}
 
 .invert_img {filter: invert(1);}
 .force_margin_5{margin-top:5rem !important;}

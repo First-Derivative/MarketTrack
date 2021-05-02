@@ -89,37 +89,23 @@
       </li>
     </ul>
 
-    <div class="py-3"id="track_content">
-      {% comment %} <ol>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-      </ol>   {% endcomment %}
+    <div class="py-3 " id="tracked_content">
+
     </div>
 
-    <div id="collection_content"> 
+    <div class="py-3 hidden" id="collections_content"> 
 
     </div>
   <div>
 
-  
-
 <div>
 
+<script>
+  let getTracked_api = "{% url 'getTracked_api' %}"
+  let getCollections_api = "{% url 'getCollections_api' %}"
+</script>
 
-<script src="{% static 'Frontend/scripts/homepage_func.js'%}"></script>
 <script src="{% static 'Frontend/scripts/homepage_ajax_requests.js'%}"></script>
+<script src="{% static 'Frontend/scripts/homepage_func.js'%}"></script>
 
 {% endblock content %}
