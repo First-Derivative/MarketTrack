@@ -20,8 +20,8 @@ class Item(models.Model):
     source = models.CharField(max_length=200) #closest unique identifier: URL for item page
     # abstract_source = models.CharField(max_length=10, choices=AbstractSourceChoice.choices, default=AbstractSourceChoice.AMAZON)
     price = models.FloatField()
-    stock_bool = models.BooleanField(null=True, blank=True)
-    stock_no = models.IntegerField(null=True, blank=True)
+    stock_bool = models.BooleanField(default=True)
+    stock_no = models.IntegerField(null=True, blank=True, default=-1)
     timestamp = models.DateTimeField(verbose_name="Tracking Timestamp", auto_now=False, auto_now_add=False, default=datetime.now)
 
     def __str__(self):
@@ -40,20 +40,16 @@ class Tracked(models.Model):
     class Meta:
         verbose_name_plural = "Tracked Items"
 
-class Collection(models.Model):
-    name = models.CharField(max_length=80)
-    user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return "{}: {}".format(self.name, self.user.username)
-
-class CollectionItems(models.Model): 
-
-    collection = models.ForeignKey('Collection', on_delete=models.CASCADE, related_name="collection_items")
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return "{}: {}".format(self.collection.name, self.item.name)
-
+class PermanentTrack(models.Model):
+    '''
+        Class Description
+    '''
+    item = models.ForeignKey(Item, null=True,on_delete=models.SET_NULL)
+    price = models.FloatField()
+    stock_bool = models.BooleanField(default=True)
+    stock_no = models.IntegerField(null=True, blank=True, default=-1)
+    timestamp = models.DateTimeField(verbose_name="Last Checked Timestamp", auto_now=False, auto_now_add=False, default=datetime.now)
+    
     class Meta:
-        verbose_name_plural = "Collection Items"
+        verbose_name = 'PermanentTrack'
+        verbose_name_plural = 'PermanentTracks'
