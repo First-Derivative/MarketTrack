@@ -2,88 +2,115 @@
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{% static '/Frontend/styles/style.css' %}">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {% comment %} <link rel="icon" href="{% static '/main/images/icons/website_icon_1.png'%}"> {% endcomment %}
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+    crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css"
+    href="{% static '/Frontend/styles/style.css' %}">
 
-    <!-- Title -->
-    <title>MarketTrack</title>
-  </head>
+  {% comment %}
+  <link rel="icon" href="{% static '/main/images/icons/website_icon_1.png'%}">
+  {% endcomment %}
 
-  <body>
-  
+  <!-- Title -->
+  <title>MarketTrack</title>
+</head>
+
+<body>
+
   <!-- Dependency Scripts : LAST LINE = HIGHER PRIORITY -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+  <script
+    src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+    integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+    crossorigin="anonymous"></script>
 
-    <!-- App Container -->
-    <div class="container py-3 px-5 rounded fill" id="app">
+  <script
+    src="https://cdn.jsdelivr.net/npm/chart.js@3.2.1/dist/chart.min.js"></script>
 
-      <!-- NavBar -->
-      <div class="row my-5"> 
-        
-        <div class="col-md-4 text-right">
-            <ul class="nav">
-              <li class="nav-item">
-                <a class="nav-link {% if request.path == '/' %}active_nav{% else %}{% endif %}" aria-current="page" href="{% url 'homepage' %}">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link {% if request.path == '/tracked' %}active_nav{% else %}{% endif %}" href="{% url 'tracked_page' %}">Tracked</a>
-              </li>
-              {% if user.is_admin %}
-              <li class="nav-item">
-                <a class="nav-link" href="#" >Stats</a>
-              </li>
-              {% else %}
-              {% endif %}
-            </ul>
-        </div>
+  <!-- App Container -->
+  <div class="container py-3 px-5 rounded fill" id="app">
 
-        <div class="col-md-4 text-center">
-            <div class="h1 color_supp ptr" id="webTitle">MarketTrack</div>
-        </div>
+    <!-- NavBar -->
+    <div class="row my-5">
 
-        <div class="col-md-4 text-right">
-          <div class="d-flex justify-content-end">
+      <div class="col-md-4 text-right">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/' %}active_nav{% else %}{% endif %}"
+              aria-current="page" href="{% url 'homepage' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/tracked' %}active_nav{% else %}{% endif %}"
+              href="{% url 'tracked_page' %}">Tracked</a>
+          </li>
+          {% if user.is_admin %}
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/stats' %}active_nav{% else %}{% endif %}"
+              href="{% url 'stats_page' %}">Stats</a>
+          </li>
+          {% else %}
+          {% endif %}
+        </ul>
+      </div>
 
-            <img src="{% static '/Frontend/media/icons/user_profile.png'%}" class="rounded ptr" width="32" height="32" alt="..." id="auth_image" style="visibility: hidden;"> 
-            <div class="no_ptr d-flex flex-row" id="auth_wrapper">
-              {% if request.user.is_authenticated %}
-                <div class="nav-link pr-0" id="auth_item" style="cursor: default"><p id="username">{{ user.username }}<p></div>
-                <div><a href="{% url 'user_logout' %}" class="nav-link" id="auth_item logout" {% comment %}style="padding-right:0rem;"{% endcomment %}>Logout</a></div>
-              {% else %}
-                <div><a href="{% url 'user_login' %}" class="nav-link" id="auth_item" style="padding-right:0rem;">Login</a></div>
-                <div><a href="{% url 'user_registration' %}" class="nav-link" id="auth_item" style="padding-right:1rem;">Register</a></div>
-              {% endif %}
+      <div class="col-md-4 text-center">
+        <div class="h1 color_supp ptr" id="webTitle">MarketTrack</div>
+      </div>
+
+      <div class="col-md-4 text-right">
+        <div class="d-flex justify-content-end">
+
+          <img src="{% static '/Frontend/media/icons/user_profile.png'%}"
+            class="rounded ptr" width="32" height="32" alt="..." id="auth_image"
+            style="visibility: hidden;">
+          <div class="no_ptr d-flex flex-row" id="auth_wrapper">
+            {% if request.user.is_authenticated %}
+            <div class="nav-link pr-0" id="auth_item" style="cursor: default">
+              <p id="username">{{ user.username }}
+              <p>
             </div>
+            <div><a href="{% url 'user_logout' %}" class="nav-link"
+                id="auth_item logout" {% comment %}style="padding-right:0rem;"
+                {% endcomment %}>Logout</a></div>
+            {% else %}
+            <div><a href="{% url 'user_login' %}" class="nav-link"
+                id="auth_item" style="padding-right:0rem;">Login</a></div>
+            <div><a href="{% url 'user_registration' %}" class="nav-link"
+                id="auth_item" style="padding-right:1rem;">Register</a></div>
+            {% endif %}
           </div>
         </div>
-
       </div>
-        
+
+    </div>
+
 
     <!-- Content -->
     {% block content %}
     {% endblock content %}
 
-    </div>
+  </div>
 
-    <!-- Declaring Variables for external script namespace access -->
-    <script>
+  <!-- Declaring Variables for external script namespace access -->
+  <script>
 
-      // Redirect to homepage from clicking title
-      $("#webTitle").click(function() {
-        location.href = "{% url 'homepage' %}"
-      })
-    </script>
+    // Redirect to homepage from clicking title
+    $("#webTitle").click(function () {
+      location.href = "{% url 'homepage' %}"
+    })
+  </script>
 
-    
-  </body>
+
+</body>
+
 </html>

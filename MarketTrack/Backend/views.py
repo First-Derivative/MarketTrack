@@ -8,11 +8,18 @@ from Frontend.models import *
 def search_api(request, query):
   return HttpResponse(status=200)
 
+def resolveAbstractSource(item):
+  choice = item.abstract_source
+  for choices in AbstractSourceChoice:
+    if(choice == choices):
+      return choices.label
+
 def serializeItem(item):
   serializedItem = {}
   serializedItem["id"] = item.id
   serializedItem["name"] = item.name
   serializedItem["source"] = item.source
+  serializedItem["abstract_source"] = resolveAbstractSource(item)
   serializedItem["price"] = item.price
   if(item.stock_bool):
     serializedItem["stock_bool"] = "Yes"
@@ -39,7 +46,7 @@ def getTrackedItems(request):
         return JsonResponse({"tracked_items": json_tracked})
       
       else:
-        return JsonResponse({"noItems": "true"})
+        return JsonResponse({"noItem": "true"})
     
     else:
       return JsonResponse({"noUser": "true"})

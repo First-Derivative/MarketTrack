@@ -1,8 +1,12 @@
 from time import sleep
 from re import sub
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from exceptions import ItemNotFound
+# from exceptions import ItemNotFound
+from UserAccounts.models import UserAccount
+from Frontend.models import Item, Tracked, PermanentTrack
 
 search_urls = {
   "newegg": "https://www.newegg.com/global/uk-en/p/pl?d=_QUERY_",
@@ -20,13 +24,29 @@ search_urls = {
   _QUERY_ = 256GB+SSD+Samsung
 '''
 
-def exit(driver):
+
+def scheduledScrapes():
+  # Order users by number of tracked items to create SJF
+  all_users = sorted(UserAccount.objects.all(), key=lambda x: x.numberOfTracked)
+  for user in all_users:
+    # queryset for userTracked Items
+    user_tracked = Tracked.objects.all().filter(user=user)
+    for tracked_item in user_tracked:
+      item = tracked_item.item
+      updatePermanentItem()
+
+def updatePermanentItem()
+  pass  
+
+def exitDriver(driver):
   '''
     Auxiliary function to cleanly close webDrivers.
   '''
   driver.close()
   driver.quit()
 
+def scrapeHandler(query):
+  pass
 
 def search_scrape(query, platform):
   '''
@@ -34,13 +54,13 @@ def search_scrape(query, platform):
   '''
   
   # Load Chromdriver unto driver object for chrome-based scraping
-  driver = webdriver.Chrome('chromedriver')
+  driver = webdriver.Chrome(ChromeDriverManager().install())
+  # driver = webdriver.Chrome('chromedriver')
   
   # Get url for scraping
   user_query = sub(" ", "+", query)
   url = search_urls[platform]
   url = sub("_QUERY_", user_query, url)
-
   driver.get(url)
   
   # Scrape Specific Functions for each Platform 
@@ -48,23 +68,25 @@ def search_scrape(query, platform):
     items = []
 
     # Initial Scraping of elements based on xpath
-    search_results = driver.find_elements_by_xpath('//div[@class="item-cell"]')
+    search_results = driver.find_element(By.CLASS_NAME, 'product').Click();
+    # search_results = driver.find_elements(By.XPATH, '/html/body/div/div[4]/div/div[1]/div/p')
+    sleep(10)
+    print(search_results, len(search_results))
+    # # Check for non-result query.
+    # if(len(search_results) == 0):
+    #   exit(driver)
+    #   raise ItemNotFound(platform)
+    #   return
     
-    # Check for non-result query.
-    if(len(search_results) == 0):
-      exit(driver)
-      raise ItemNotFound(platform)
-      return
-    
-    data = []
-    for i in range(len(search_results)):
-      if(search_results[i].is_displayed()):
-          driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL +"t");
-          search_results[i].click()
-          sleep(4)
-          # item = driver.find_elements
+    # data = []
+    # for i in range(len(search_results)):
+    #   if(search_results[i].is_displayed()):
+    #       driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL +"t");
+    #       search_results[i].click()
+    #       sleep(4)
+    #       # item = driver.find_elements
 
-          # print(item.)
+    #       # print(item.)
 
     # sleep(10)
 
@@ -73,8 +95,9 @@ def search_scrape(query, platform):
   elif(platform == "ebay"):
     pass
 
-  exit(driver)
+  exitDriver(driver)
   
 
 
-search_scrape("RTX 2060 super", "newegg")
+# search_scrape("RTX 2060 super", "newegg")
+scheduledScrapes()

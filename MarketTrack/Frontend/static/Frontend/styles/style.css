@@ -91,14 +91,14 @@ html, body
 .results_card
 {
   width:17rem;
-  height: 15rem;
+  height: 17rem;
   margin-right: 2rem;
 }
 
 .item_card
 {
   width:17rem;
-  height: 18rem;
+  height: 21rem;
   margin-right: 2rem;
   
 }
@@ -231,4 +231,16 @@ html, body
 label 
 {
   color: #419C5B;
+}
+
+.stats_button
+{
+  margin-top: 2.2rem;
+  margin-left: 1rem;
+  height: 2.4rem;
+}
+
+.stats_chart
+{
+  height: 25rem;
 }

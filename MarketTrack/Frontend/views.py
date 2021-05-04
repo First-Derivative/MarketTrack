@@ -10,12 +10,12 @@ def homepage_view(request):
     return render(request, "Frontend/homepage.html", {})
   return HttpResponseBadRequest("Invalid Request")
 
-def collections_view(request):
-  if(request.method == "GET"):
-    return render(request, "Frontend/collections.html", {})
-  return HttpResponseBadRequest("Invalid Request")
-
 def tracked_view(request):
   if(request.method == "GET"):
     return render(request, "Frontend/tracked.html", {})
+  return HttpResponseBadRequest("Invalid Request")
+
+def stats_view(request):
+  if(request.method == "GET"):
+    return render(request, "Frontend/stats.html", {})
   return HttpResponseBadRequest("Invalid Request")

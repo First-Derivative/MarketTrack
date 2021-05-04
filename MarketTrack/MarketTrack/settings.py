@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'UserAccounts',
     'Frontend',
-    'Backend'
+    'Backend',
+    'django_crontab'
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,8 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# CRON JOBS 
+CRONJOBS = [
+    ('30 * * * *', 'myapp.Backend.scheduledScrapes')
+]
