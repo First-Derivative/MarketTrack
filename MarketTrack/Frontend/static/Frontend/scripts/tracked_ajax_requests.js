@@ -1,8 +1,8 @@
 // Ajax Requests
 
-user_no_tracked_items_div = "<div class='row py-5 text-center'><p class='color_supp'>Looks like you don't have any tracked items, search for some items to track!</p></div>"
+user_no_tracked_items_div = "<div class='d-flex justify-content-center'><p class='color_supp'>Looks like you don't have any tracked items, search for some items to track!</p></div>"
 
-unlogged_user_content_div = "<div class='row p-5 text-center'><p class='color_supp'>Looks like you're not logged in, log in or create an account to track your items and view stats</p></div>"
+unlogged_user_content_div = "<div class='row p-5 d-flex justify-content-center'><p class='color_supp'>Looks like you're not logged in, log in or create an account to track your items and view stats</p></div>"
 
 // <p class="card-text pl-1 text-left" id="item_stock_avail">Item Source: ${item.abstract_source}</p>
 function buildItemCard(item, id) {
