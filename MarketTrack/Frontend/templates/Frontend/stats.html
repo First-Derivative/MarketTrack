@@ -33,9 +33,9 @@
           </select>
         </div>
       </div>
-      <button class="btn stats_button btn-secondary" id="stats_button_1">View
+      <a class="btn stats_button btn-secondary" id="stats_button_1">View
         Stats
-      </button>
+      </a>
     </form>
   </div>
 
@@ -50,9 +50,9 @@
           </select>
         </div>
       </div>
-      <button class="btn stats_button btn-secondary" id="stats_button_1">View
+      <a class="btn stats_button btn-secondary" id="stats_button_2">View
         Stats
-      </button>
+      </a>
     </form>
   </div>
 
@@ -61,12 +61,13 @@
 
 
 <div class="row mt-5" id="char_display">
-  <div class="col-md-6">
+  <div class="col-md-6 chart-container">
     <canvas class="stats_chart" id="chart_1">
 
     </canvas>
   </div>
-  <div clas="col-md-6">
+
+  <div class="col-md-6 chart-container">
     <canvas class="stats_chart" id="chart_2">
 
     </canvas>
@@ -83,8 +84,8 @@
 </script>
 
 <script>
-  var dataset_1 = [100, 100, 105, 100, 97, 100, 100]
-  var labels = ["18:37,04-May-2021", "19:07,04-May-2021", "19:37,04-May-2021", "20:07, 04-May-2021", "20:37, 04-May-2021"]
+  var dataset_1 = []
+  var labels = []
 
   var ctx1 = $("#chart_1")
   var chart1 = new Chart(ctx1, {
@@ -109,6 +110,31 @@
       maintainAspectRatio: false,
     }
   });
+
+  var ctx2 = $("#chart_2")
+  var chart2 = new Chart(ctx2, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Price in GBP',
+        data: dataset_1,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+        ],
+        borderWidth: 1
+      }
+      ]
+    },
+    options:
+    {
+      maintainAspectRatio: false,
+    }
+  });
+
 </script>
 
 <script src="{% static 'Frontend/scripts/stats_ajax_requests.js'%}"></script>

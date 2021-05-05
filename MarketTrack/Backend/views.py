@@ -100,7 +100,7 @@ def deleteTrackedItem(request, item_id):
 def getItemDataset(request, item_id):
   if(request.method == "GET"):
     try:
-      item_queryset = PermanentTrack.objects.all().filter(item=1).order_by('timestamp')
+      item_queryset = PermanentTrack.objects.all().filter(item=item_id).order_by('timestamp')
       response = serializeItemDataset(item_queryset)
       return JsonResponse({"itemSet": response})
     except PermanentTrack.DoesNotExist:
