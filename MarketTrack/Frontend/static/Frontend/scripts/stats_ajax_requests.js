@@ -62,7 +62,7 @@ $(document).ready(function () {
       content = response.itemSet
       if (content) {
         clearChart(chart1);
-        updateChart(chart1);
+        updateChart(chart1, content);
 
       } else { console.log("Get Item Dataset error") }
     },
