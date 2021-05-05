@@ -177,6 +177,15 @@ html, body
   color: transparent;
 }
 
+.search_result_button
+{
+  width: 12rem;
+}
+
+#track_button
+{
+  background-color: #6c757d;
+
 .carousel_item_wrapper
 {
   position: absolute;
