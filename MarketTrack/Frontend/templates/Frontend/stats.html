@@ -79,13 +79,15 @@
   let token = "{{csrf_token}}"
   let page = "stats"
   let getTracked_api = "{% url 'getTracked_api' %}"
+  let getItemDataset_api = "{% url 'getItemDataset_api' 0 %}"
 </script>
 
 <script>
   var dataset_1 = [100, 100, 105, 100, 97, 100, 100]
-  var labels = ["18:37 04 May, 2021", "19:07 04 May, 2021", "19:37 04 May, 2021", "20:07 04 May, 2021", "20:37 04 May, 2021"]
-  var ctx = $("#chart_1")
-  var myChart = new Chart(ctx, {
+  var labels = ["18:37,04-May-2021", "19:07,04-May-2021", "19:37,04-May-2021", "20:07, 04-May-2021", "20:37, 04-May-2021"]
+
+  var ctx1 = $("#chart_1")
+  var chart1 = new Chart(ctx1, {
     type: 'line',
     data: {
       labels: labels,

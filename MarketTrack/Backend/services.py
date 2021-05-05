@@ -5,8 +5,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 # from exceptions import ItemNotFound
-from UserAccounts.models import UserAccount
-from Frontend.models import Item, Tracked, PermanentTrack
+# from UserAccounts.models import UserAccount
+# from Frontend.models import Item, Tracked, PermanentTrack
 
 search_urls = {
   "newegg": "https://www.newegg.com/global/uk-en/p/pl?d=_QUERY_",
@@ -33,9 +33,9 @@ def scheduledScrapes():
     user_tracked = Tracked.objects.all().filter(user=user)
     for tracked_item in user_tracked:
       item = tracked_item.item
-      updatePermanentItem()
+      updatePermanentItem(item)
 
-def updatePermanentItem()
+def updatePermanentItem():
   pass  
 
 def exitDriver(driver):
@@ -100,4 +100,22 @@ def search_scrape(query, platform):
 
 
 # search_scrape("RTX 2060 super", "newegg")
-scheduledScrapes()
+# scheduledScrapes()
+
+def test():
+
+  # Load Chromdriver unto driver object for chrome-based scraping
+  driver = webdriver.Chrome(ChromeDriverManager().install())
+  
+  url = "https://chiefobrienatwork.com/post/106684455801/episode-1-r%C3%A9sum%C3%A9-builder-read-the-next-episode"
+  driver.get(url)
+  identifier = "/html/body/div[3]/div[2]/article/div[2]/div[1]/p[1]"
+
+  item = driver.find_elements(By.XPATH, identifier)
+
+  print("item", item)
+  print("item.text", item.text)
+
+  exitDriver(driver)
+
+test()

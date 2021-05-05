@@ -30,6 +30,13 @@ def serializeItem(item):
 
   return serializedItem
 
+def serializeItemDataset(itemSet):
+  response = {"dataset":[], "label":[]}
+  for item in itemSet:
+    response["dataset"].append(item.price)
+    response["label"].append(item.timestamp.strftime('%H:%M,%d-%B-%Y'))
+  return response
+
 def getTrackedItems(request):
   if(request.method == "GET"):
     if(not request.user.is_anonymous):
@@ -89,8 +96,19 @@ def deleteTrackedItem(request, item_id):
       return HttpResponseBadRequest("Invalid Item ID")
   return HttpResponseBadRequest("Invalid Request")
 
+@login_required
+def getItemDataset(request, item_id):
+  if(request.method == "GET"):
+    try:
+      item_queryset = PermanentTrack.objects.all().filter(item=1).order_by('timestamp')
+      response = serializeItemDataset(item_queryset)
+      return JsonResponse({"itemSet": response})
+    except PermanentTrack.DoesNotExist:
+      return HttpResponseBadRequest("Invalid Item ID")
+  return HttpResponseBadRequest("Invalid Request")
+
 # 404 error handler view
-def error_handler(request, item_id):
+def error_handler(request):
   return HttpResponseBadRequest("Invalid Resource")
 
 def testView(request):

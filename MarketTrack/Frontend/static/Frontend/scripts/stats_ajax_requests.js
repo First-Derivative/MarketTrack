@@ -1,8 +1,5 @@
 user_no_tracked_items_div = "<div class='row py-5 text-center'><p class='color_supp'>Looks like you don't have any tracked items, search for some items to track!</p></div>"
 
-var dataset_1 = [1, 3, 5, 6, 10]
-var labels = ["A", "B", "C", "D", "E"]
-
 function getTrackedItems() {
 
   $.ajax({
@@ -31,12 +28,46 @@ function getTrackedItems() {
   })
 }
 
-function buildChart() {
-  data_set = [0, 2, 3, 5, 7, 10, 8, 11, 15]
+function updateChart(chart, updates) {
+  chart.data.datasets[0].data = updates.dataset
+  chart.data.labels = updates.label
+  chart.update()
 }
+
+function clearChart(chart) {
+  chart.data.labels.pop();
+  chart.data.datasets.forEach((dataset) => {
+    dataset.data.pop();
+  });
+  chart.update()
+}
+
 
 $("#stats_button_1").click(function () {
   buildChart()
 })
 
 if (page == "stats") { getTrackedItems() }
+
+$(document).ready(function () {
+
+  // id = $("#tracked_select_1 option:selected").attr("value")
+  console.log($("#tracked_select_1 option:selected"))
+  updates = {}
+  $.ajax({
+    type: "GET",
+    url: getItemDataset_api.replace(0, 1),
+    success: function (response) {
+
+      content = response.itemSet
+      if (content) {
+        clearChart(chart1);
+        updateChart(chart1);
+
+      } else { console.log("Get Item Dataset error") }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert("textStatus: " + textStatus + " " + errorThrown)
+    }
+  })
+})
