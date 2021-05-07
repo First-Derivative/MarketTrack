@@ -42,9 +42,7 @@ function getTrackedItems(obj) {
           max = 0
           item_list = []
           loopCond = true
-          console.log("loop no" + i)
           while (loopCond) {
-            console.log("max is " + max)
             item_wireframe = content.pop()
             item = buildItemCard(item_wireframe)
             item_list.push(item)
@@ -96,7 +94,11 @@ function trackItem(content) {
         $("#modal_error").append(`<p class="text-danger">${response.error}</p>`)
         return true;
       }
-      console.log("adding item to DOM")
+      item = buildItemCard(response.item)
+      entry = $("#tracked_content").children()
+      entryLen = entry.length
+      entry = entry.slice(entryLen - 1, entryLen)
+      $(entry).append(item)
     },
     error: function (jqXHR, textStatus, errorThrown) {
       alert("textStatus: " + textStatus + " " + errorThrown)
@@ -111,11 +113,14 @@ $("#track_button_1").click(function () {
   children = $(parent).children()
   base_parent = $(parent).parent()
   data = $(base_parent).children().slice(0, 4)
+  price = $(data[1]).text()
+  priceLen = price.length
+  price_edit = price.slice(1, priceLen)
 
   // Assign Data
   content.name = $(data[0]).text()
-  content.price = $(data[1]).text()
-  content.stock = $(data[2]).text() == "Stock Available" ? true : false
+  content.price = price_edit
+  content.stock = $(data[2]).text() == " Stock Available " ? true : false
   content.source = $(data[3]).text()
   content.link = $(children[0]).attr("href")
 
@@ -135,7 +140,7 @@ $("#track_button_2").click(function () {
   // Assign Data
   content.name = $(data[0]).text()
   content.price = $(data[1]).text()
-  content.stock = $(data[2]).text() == "Stock Available" ? true : false
+  content.stock = $(data[2]).text() == " Stock Available " ? true : false
   content.source = $(data[3]).text()
   content.link = $(children[0]).attr("href")
 

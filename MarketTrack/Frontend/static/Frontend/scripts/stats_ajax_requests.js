@@ -7,7 +7,7 @@ function getTrackedItems() {
     url: getTracked_api,
     success: function (response) {
 
-      if (response.hasOwnProperty("noItems")) { $("stats_info_display").append(user_no_tracked_items_div); }
+      if (response.hasOwnProperty("noItems")) { $("stats_info_display").append(user_no_tracked_items_div); return true; }
 
       content = response.tracked_items
       if (content) {
@@ -45,18 +45,23 @@ function clearChart(chart) {
 
 $("#stats_button_1").click(function () {
   id = $("#tracked_select_1 option:selected").attr("name")
-  console.log("STATS1 CLICKED WITH ID", id)
   $.ajax({
     type: "GET",
     url: getItemDataset_api.replace(0, id),
     success: function (response) {
 
+      if (response.error) {
+        $("#stats_modal").modal()
+        $("#modal_error").empty();
+        $("#modal_error").append(`<p class="text-danger">${response.error}</p>`)
+        return true;
+      }
+
       content = response.itemSet
       if (content) {
         clearChart(chart1);
         updateChart(chart1, content);
-
-      } else { console.log("Get Item Dataset error") }
+      }
     },
     error: function (jqXHR, textStatus, errorThrown) {
       alert("textStatus: " + textStatus + " " + errorThrown)
@@ -67,18 +72,25 @@ $("#stats_button_1").click(function () {
 
 $("#stats_button_2").click(function () {
   id = $("#tracked_select_2 option:selected").attr("name")
-  console.log("STATS2 CLICKED WITH ID", id)
   $.ajax({
     type: "GET",
     url: getItemDataset_api.replace(0, id),
     success: function (response) {
+
+      if (response.error) {
+        console.log("STATS GOT ERROR")
+        $("#stats_modal").modal()
+        $("#modal_error").empty();
+        $("#modal_error").append(`<p class="text-danger">${response.error}</p>`)
+        return true;
+      }
 
       content = response.itemSet
       if (content) {
         clearChart(chart2);
         updateChart(chart2, content);
 
-      } else { console.log("Get Item Dataset error") }
+      }
     },
     error: function (jqXHR, textStatus, errorThrown) {
       alert("textStatus: " + textStatus + " " + errorThrown)

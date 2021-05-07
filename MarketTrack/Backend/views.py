@@ -91,8 +91,31 @@ def addTrackedItem(request):
       return JsonResponse({"error":"Only users can track items! Register an account or log in to start tracking"})
     post = request.POST
     content = post.get("content")
-    print(content)
-    return HttpResponse(status=200)
+
+    try:
+      item = Item.objects.get(name=post["content[name]"], source=post["content[link]"])
+      return JsonResponse({"error": "Item already exists and is tracked"})
+    except Item.DoesNotExist:
+      # Format Data
+      abstractChoice = post["content[source]"]
+      for choice in AbstractSourceChoice:
+        if(choice.label == abstractChoice):
+          abstractChoice = choice
+      price = post["content[price]"]
+      price = price[1:]
+      stock_bool = False
+      if(post["content[stock]"] == "true"):
+        stock_bool = True
+      
+      # Create Item & Tracked
+      item = Item(name=post["content[name]"], source=post["content[link]"], abstract_source= abstractChoice, price=price, stock_bool=stock_bool)
+      serializedItem = serializeItem(item)
+      
+      item.save()
+      tracked = Tracked(item=item, user=request.user)
+      tracked.save()
+
+      return JsonResponse({"item": serializedItem})
   return HttpResponseBadRequest("Invalid Request, not POST")
 
 @login_required
@@ -112,6 +135,8 @@ def getItemDataset(request, item_id):
   if(request.method == "GET"):
     try:
       item_queryset = PermanentTrack.objects.all().filter(item=item_id).order_by('timestamp')
+      if(len(item_queryset)== 0):
+        return JsonResponse({"error":"Not enough data for tracked item for statistics display"})
       response = serializeItemDataset(item_queryset)
       return JsonResponse({"itemSet": response})
     except PermanentTrack.DoesNotExist:
