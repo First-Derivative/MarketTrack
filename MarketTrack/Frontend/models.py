@@ -44,12 +44,17 @@ class PermanentTrack(models.Model):
   '''
   item = models.ForeignKey(Item, null=True,on_delete=models.SET_NULL)
   price = models.FloatField()
-  source = models.CharField(max_length=200, default="LINK")
+  # source = models.CharField(max_length=200, default="LINK")
   abstract_source = models.CharField(max_length=10, choices=AbstractSourceChoice.choices, default=AbstractSourceChoice.CURRYS)
   stock_bool = models.BooleanField(default=True)
   stock_no = models.IntegerField(null=True, blank=True, default=-1)
   timestamp = models.DateTimeField(verbose_name="Last Checked Timestamp", auto_now=False, auto_now_add=False, default=datetime.now)
   
+  @property 
+  def source(self):
+    link = self.item.source
+    return link
+
   class Meta:
       verbose_name = 'Permanently Tracked Item'
       verbose_name_plural = 'Permanently Tracked Items'

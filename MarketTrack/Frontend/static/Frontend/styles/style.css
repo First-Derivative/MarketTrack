@@ -91,16 +91,20 @@ html, body
 .results_card
 {
   width:17rem;
-  height: 19rem;
+  height: 21rem;
   margin-right: 2rem;
 }
 
 .item_card
 {
   width:17rem;
-  height: 21rem;
+  height: 24rem;
   margin-right: 2rem;
   
+}
+
+#item_title{
+  min-height: 5rem;
 }
 
 .result_card_img
@@ -249,4 +253,9 @@ label
 .stats_chart
 {
   height: 27rem;
+}
+
+.stats_form
+{
+  max-width: 21rem;
 }

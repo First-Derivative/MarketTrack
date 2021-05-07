@@ -98,7 +98,15 @@ function trackItem(content) {
       entry = $("#tracked_content").children()
       entryLen = entry.length
       entry = entry.slice(entryLen - 1, entryLen)
-      $(entry).append(item)
+
+      // Check if row is full
+      if ($(entry).children().length < 3) {
+        $(entry).append(item)
+      }
+      else {
+        $("#tracked_content").append(`<div class="row mt-5" id="tracked_row"></div>`)
+        $("#tracked_row").append(item)
+      }
     },
     error: function (jqXHR, textStatus, errorThrown) {
       alert("textStatus: " + textStatus + " " + errorThrown)

@@ -50,6 +50,7 @@ def getTrackedItems(request):
         for tracked_items in tracked_query:
           obj = serializeItem(tracked_items.item)
           json_tracked.append(obj)
+        print("Sending Tracked Items: {}".format(json_tracked))
         return JsonResponse({"tracked_items": json_tracked})
       
       else:
@@ -107,6 +108,7 @@ def addTrackedItem(request):
           abstractChoice = choice
       
       price = post["content[price]"]
+      price = price.strip(" ")
       price = price[1:]
       stock_bool = False
       if(post["content[stock]"] == "true"):
@@ -126,11 +128,12 @@ def addTrackedItem(request):
 
 @login_required
 def deleteTrackedItem(request, item_id):
+  print("getting delete request")
   if(request.method == "DELETE"):
     user = request.user
     try:
-      tracked_item = Tracked.objects.get(id=item_id)
       item = Item.objects.get(id=item_id)
+      tracked_item = Tracked.objects.get(item=item)
       tracked_item.delete()
       item.delete()
       return HttpResponse(status=200)
