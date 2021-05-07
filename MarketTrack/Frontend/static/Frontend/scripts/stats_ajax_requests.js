@@ -78,7 +78,6 @@ $("#stats_button_2").click(function () {
     success: function (response) {
 
       if (response.error) {
-        console.log("STATS GOT ERROR")
         $("#stats_modal").modal()
         $("#modal_error").empty();
         $("#modal_error").append(`<p class="text-danger">${response.error}</p>`)

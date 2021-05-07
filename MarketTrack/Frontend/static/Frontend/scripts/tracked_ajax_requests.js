@@ -28,7 +28,7 @@ function buildDeleteFunc(item) {
   <div class="modal-dialog">
     <div class="modal-content modal_delete">
       <div class="modal-header text-center">
-        <h5 class="modal-title text-center pl-2" id="modal_label_${item.id}">Are you sure?</h5>
+        <h5 class="modal-title color_supp text-center pl-2" id="modal_label_${item.id}">Are you sure?</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -75,12 +75,14 @@ function getTrackedItems() {
           modal_list = []
           id_list = []
           loopCond = true
+          $('#deleteForm').empty()
           while (loopCond) {
             item_wireframe = content.pop()
 
             item = buildItemCard(item_wireframe)
             modal = buildDeleteFunc(item_wireframe)
 
+            $('#deleteForm').append(`<option name=${item_wireframe.id}>${item_wireframe.name}</option>`)
             item_list.push(item)
             modal_list.push(modal)
             id_list.push(item_wireframe.id)
@@ -111,6 +113,13 @@ function getTrackedItems() {
     }
   })
 }
+
+$("#deleteList_button").click(function () {
+  id = $("#deleteForm option:selected").attr("name")
+  deleteItem(id)
+
+  $("#tracked_deleteList_Modal").modal('toggle')
+})
 
 // Tracked: delete_item requests
 function deleteItem(item_id) {

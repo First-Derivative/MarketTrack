@@ -10,12 +10,43 @@
 <div class="row">
   <div class="col-md-10 ml-4">
     <h4 class="color_supp">Your Tracked Items</h4>
-    <h5 class="btn mt-3 btn-danger">Delete Specific Items</h5>
+    <h5 class="btn mt-3 btn-danger" data-toggle="modal" data-target="#tracked_deleteList_Modal">Delete Specific Items</h5>
   </div>
 </div>
 
 <div class="row d-flex justify-content-between" id="item_display">
 
+</div>
+
+<!-- Tracked Delete Query Modal -->
+<div class="modal fade" id="tracked_deleteList_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title color_supp" id="deleteList_Title">Delete Tracked Items</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-row align-items-center">
+            <div class="col-auto w-100 my-1">
+              <label class="mr-sm-2" for="inlineFormCustomSelect">Select your tracked item and press delete</label>
+              <select class="custom-select mr-sm-2" id="deleteForm">
+                <option selected>--</option>
+              </select>
+            </div>
+          </div>
+        </form>
+        <h3 class="small text-danger mt-3" style="font-style:italic">There is no confirmation message so make sure you're deleting what you want to delete</h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" id="deleteList_button">Delete</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endif %}
