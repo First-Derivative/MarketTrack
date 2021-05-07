@@ -8,7 +8,7 @@ class AbstractSourceChoice(models.TextChoices):
   AMAZON = ("AZ", "Amazon")
   CURRYS = ("CU", "Currys")
   EBAY = ("EB", "Ebay")
-  NEWEGG = ("NE","NewEgg")
+  NEWEGG = ("NE","Newegg")
 
 class Item(models.Model):
   '''

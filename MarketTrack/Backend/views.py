@@ -96,19 +96,25 @@ def addTrackedItem(request):
       item = Item.objects.get(name=post["content[name]"], source=post["content[link]"])
       return JsonResponse({"error": "Item already exists and is tracked"})
     except Item.DoesNotExist:
+      
       # Format Data
       abstractChoice = post["content[source]"]
+      abstractChoice = abstractChoice.strip(" ")
+      print("resolving choice")
+      
       for choice in AbstractSourceChoice:
         if(choice.label == abstractChoice):
           abstractChoice = choice
+      
       price = post["content[price]"]
       price = price[1:]
       stock_bool = False
       if(post["content[stock]"] == "true"):
         stock_bool = True
-      
+
+      print(abstractChoice, "with length: " + str(len(abstractChoice)))
       # Create Item & Tracked
-      item = Item(name=post["content[name]"], source=post["content[link]"], abstract_source= abstractChoice, price=price, stock_bool=stock_bool)
+      item = Item(name=post["content[name]"], source=post["content[link]"], abstract_source= abstractChoice, price=price, stock_bool=stock_bool, timestamp= datetime.now())
       serializedItem = serializeItem(item)
       
       item.save()
@@ -124,7 +130,9 @@ def deleteTrackedItem(request, item_id):
     user = request.user
     try:
       tracked_item = Tracked.objects.get(id=item_id)
+      item = Item.objects.get(id=item_id)
       tracked_item.delete()
+      item.delete()
       return HttpResponse(status=200)
     except Tracked.DoesNotExist:
       return HttpResponseBadRequest("Invalid Item ID")
