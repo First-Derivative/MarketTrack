@@ -182,9 +182,9 @@ html, body
   width: 12rem;
 }
 
-#track_button
+.track_btn
 {
-  background-color: #6c757d;
+  background-color: #6c757d !important;
 }
 
 .carousel_item_wrapper

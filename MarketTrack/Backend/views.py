@@ -82,7 +82,18 @@ def getCollections(request):
         return JsonResponse({"noCollections": "true"})
     else:
       return JsonResponse({"noUser": "true"})
-  return HttpResponseBadRequest("Invalid Request")
+  return HttpResponseBadRequest("Invalid Request, not GET")
+
+
+def addTrackedItem(request):
+  if(request.method == "POST"):
+    if(request.user.is_anonymous):
+      return JsonResponse({"error":"Only users can track items! Register an account or log in to start tracking"})
+    post = request.POST
+    content = post.get("content")
+    print(content)
+    return HttpResponse(status=200)
+  return HttpResponseBadRequest("Invalid Request, not POST")
 
 @login_required
 def deleteTrackedItem(request, item_id):
@@ -94,7 +105,7 @@ def deleteTrackedItem(request, item_id):
       return HttpResponse(status=200)
     except Tracked.DoesNotExist:
       return HttpResponseBadRequest("Invalid Item ID")
-  return HttpResponseBadRequest("Invalid Request")
+  return HttpResponseBadRequest("Invalid Request, not DELETE")
 
 @login_required
 def getItemDataset(request, item_id):
@@ -105,7 +116,7 @@ def getItemDataset(request, item_id):
       return JsonResponse({"itemSet": response})
     except PermanentTrack.DoesNotExist:
       return HttpResponseBadRequest("Invalid Item ID")
-  return HttpResponseBadRequest("Invalid Request")
+  return HttpResponseBadRequest("Invalid Request, not GET")
 
 # 404 error handler view
 def error_handler(request):

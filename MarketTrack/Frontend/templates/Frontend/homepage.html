@@ -28,9 +28,10 @@
 
 <!-- Search Results Entry -->
 
-<div class="row mt-4" id="search_results_row">
+<div class="row mt-4 hidden" id="search_results_row">
 
   <div class="col-md-1"></div> <!-- Empty for Spacing -->
+
   <div class="col-md-10">
     <h5 class="color_supp">Results...</h5>
     <div class="carousel slide" id="results_carousel" data-ride="carousel">
@@ -42,41 +43,55 @@
         <li data-target="#results_carousel" data-slide-to="1"></li>
       </ol>
 
+      <!-- Carousel Item Display -->
       <div class="carousel-inner" id="carousel_wrapper">
+
+        <!-- Carousel Item 1-->
         <div class="carousel-item active">
           <div class="carousel_item_wrapper text-center">
-            <h3> Item1</h3>
-            <p> Data1 </p>
-            <p> Data1 </p>
-            <a href="#" class="btn std_button"> Source</a>
+            <h3 id="results_card_name"> SAMSUNG 870 QVO 1TB 2.5" SATA III</h3>
+            <p> &pound;103.20</p>
+            <p> Stock Available </p>
+            <p> Newegg </p>
+
+            <div class="d-flex flex-row justify-content-center">
+              <a href="https://www.newegg.com/global/uk-en/samsung-1tb-870-qvo-series/p/2WA-003Z-00382?Description=Samsung%20Qvo%201TB&cm_re=Samsung_Qvo%201TB-_-2WA-003Z-00382-_-Product&quicklink=true"
+                class="btn std_button mr-3 search_result_button"> View on their
+                website</a>
+              <a class="btn std_button btn-secondary ml-3 search_result_button track_btn"
+                id="track_button_1">Track</a>
+            </div>
           </div>
         </div>
 
+        <!-- Carousel Item 2 -->
         <div class="carousel-item ">
           <div class="carousel_item_wrapper text-center">
-            <h3> SAMSUNG QVO 870 2.5" Internal SSD - 1 TB </h3>
+            <h3 id="results_card_name">SAMSUNG QVO 870 2.5" Internal SSD - 1 TB</h3>
             <p> &pound;99.99 </p>
             <p> Stock Available </p>
             <p> Currys </p>
             <div class="d-flex flex-row justify-content-center">
               <a href="https://www.currys.co.uk/gbuk/computing-accessories/data-storage/solid-state-drives/samsung-qvo-870-2-5-internal-ssd-1-tb-10218693-pdt.html"
-                class="btn std_button mr-3 search_result_button"> View on their
+                class="btn std_button mr-3 search_result_button"> View on
+                their
                 website</a>
-              <a href="#"
-                class="btn std_button btn-secondary ml-3 search_result_button"
-                id="track_button">Track</a>
+              <a class="btn std_button btn-secondary ml-3 search_result_button track_btn"
+                id="track_button_2">Track</a>
             </div>
           </div>
         </div>
 
       </div>
 
+      <!-- Carousel Prev Button -->
       <a class="carousel-control-prev" href="#results_carousel" role="button"
         data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
       </a>
 
+      <!-- Carousel Next Button -->
       <a class="carousel-control-next" href="#results_carousel" role="button"
         data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
@@ -84,11 +99,10 @@
       </a>
 
     </div>
-
   </div>
-
   <div class="col-md-1"></div> <!-- Empty for Spacing -->
 </div>
+
 
 <!-- Tracked/Collection Display -->
 <div class="row" id="track_collec_row" style="margin-top:4rem;">
@@ -107,20 +121,30 @@
         functionality can be found on the Tracked page</small>
     </div>
 
-    <div>
+  </div>
 
-      <div>
+</div>
 
-        <script>
-          let getTracked_api = "{% url 'getTracked_api' %}"
+<!-- Modal for Search Display -->
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="search_modal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content p-3 px-4" id="modal_error" style="width: 18rem;"> 
+    </div>
+  </div>
+</div>
 
-        </script>
 
-        <script
-          src="{% static 'Frontend/scripts/homepage_ajax_requests.js'%}"></script>
-        <script src="{% static 'Frontend/scripts/homepage_func.js'%}"></script>
-        <script>
-          $(document).ready(getTrackedItems($("#tracked_display")))
-        </script>
+<script>
+  let getTracked_api = "{% url 'getTracked_api' %}"
+  let postTracked_api = "{% url 'postTracked_api' %}"
+  let token = '{{csrf_token}}'
+</script>
 
-        {% endblock content %}
+<script
+  src="{% static 'Frontend/scripts/homepage_ajax_requests.js'%}"></script>
+<script>
+  $(document).ready(getTrackedItems())
+
+</script>
+
+{% endblock content %}

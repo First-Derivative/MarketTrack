@@ -1,7 +1,6 @@
 // Ajax Requsts
 
 user_no_tracked_items_div = "<div class='py-5 text-center'><p class='color_supp'>Looks like you don't have any tracked items, search for some items to track!</p></div>"
-user_no_collection_div = "<div class='py-5 text-center'> <p class='color_supp'>Looks like you don't have any collections, create a collection at the collections page</p> </div>"
 
 unlogged_user_content_div = "<div class='p-5 text-center'><p class='color_supp'>Looks like you're not logged in, log in or create an account to track your items and view stats</p></div>"
 
@@ -67,20 +66,79 @@ function getTrackedItems(obj) {
   })
 }
 
-// Homepage: collection_display request
-function getCollections(obj) {
+function toggleResults() {
+  row = "#search_results_row"
+  if ($(row).hasClass("hidden")) {
+    $(row).removeClass("hidden")
+    return true;
+  }
+  $(row).addClass("hidden")
+}
 
+$("#search_button").click(function () {
+  // searchForItem()
+  toggleResults()
+})
+
+function trackItem(content) {
   $.ajax({
-    type: "GET",
-    url: getCollections_api,
+    type: 'POST',
+    headers: { "X-CSRFToken": token },
+    url: postTracked_api,
+    data: {
+      'content': content
+    },
     success: function (response) {
 
-      if (response.hasOwnProperty("noCollections")) { $("#collections_content").append(user_no_collection_div) }
-      if (response.hasOwnProperty("noUser")) { $("#collections_content").append(unlogged_user_content_div) }
-
+      if (response.error) {
+        $("#search_modal").modal()
+        $("#modal_error").empty();
+        $("#modal_error").append(`<p class="text-danger">${response.error}</p>`)
+        return true;
+      }
+      console.log("adding item to DOM")
     },
     error: function (jqXHR, textStatus, errorThrown) {
       alert("textStatus: " + textStatus + " " + errorThrown)
     }
   })
 }
+
+$("#track_button_1").click(function () {
+  content = { "name": null, "price": null, "stock": false, "source": null, "link": null }
+  // Get Data
+  parent = $(this).parent()
+  children = $(parent).children()
+  base_parent = $(parent).parent()
+  data = $(base_parent).children().slice(0, 4)
+
+  // Assign Data
+  content.name = $(data[0]).text()
+  content.price = $(data[1]).text()
+  content.stock = $(data[2]).text() == "Stock Available" ? true : false
+  content.source = $(data[3]).text()
+  content.link = $(children[0]).attr("href")
+
+  // Call AJAX Request
+  trackItem(content)
+
+})
+
+$("#track_button_2").click(function () {
+  content = { "name": null, "price": null, "stock": false, "source": null, "link": null }
+  // Get Data
+  parent = $(this).parent()
+  children = $(parent).children()
+  base_parent = $(parent).parent()
+  data = $(base_parent).children().slice(0, 4)
+
+  // Assign Data
+  content.name = $(data[0]).text()
+  content.price = $(data[1]).text()
+  content.stock = $(data[2]).text() == "Stock Available" ? true : false
+  content.source = $(data[3]).text()
+  content.link = $(children[0]).attr("href")
+
+  // Call AJAX Request
+  trackItem(content)
+})
