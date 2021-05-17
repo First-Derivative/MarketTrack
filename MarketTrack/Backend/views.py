@@ -104,13 +104,12 @@ def addTrackedItem(request):
 
     try:
       item = Item.objects.get(name=post["content[name]"], source=post["content[link]"])
-      return JsonResponse({"error": "Item already exists and is tracked"})
+      return JsonResponse({"error": "Item exists and is tracked"})
     except Item.DoesNotExist:
       
       # Format Data
       abstractChoice = post["content[source]"]
       abstractChoice = abstractChoice.strip(" ")
-      print("resolving choice")
       
       for choice in AbstractSourceChoice:
         if(choice.label == abstractChoice):
@@ -123,12 +122,11 @@ def addTrackedItem(request):
       if(post["content[stock]"] == "true"):
         stock_bool = True
 
-      print(abstractChoice, "with length: " + str(len(abstractChoice)))
       # Create Item & Tracked
       item = Item(name=post["content[name]"], source=post["content[link]"], abstract_source= abstractChoice, price=price, stock_bool=stock_bool, timestamp= datetime.now())
-      serializedItem = serializeItem(item)
-      
       item.save()
+      
+      serializedItem = serializeItem(item)
       tracked = Tracked(item=item, user=request.user)
       tracked.save()
 

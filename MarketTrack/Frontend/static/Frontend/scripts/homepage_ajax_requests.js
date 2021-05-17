@@ -20,8 +20,8 @@ function buildItemCard(item) {
   return item_card
 }
 
-function buildCarouselItem(item, active) {
-  carousel_item = `<div class="carousel-item ${active ? 'active' : ''}">
+function buildCarouselItem(item, index) {
+  carousel_item = `<div class="carousel-item ${index==0 ? 'active' : ''}">
   <div class="carousel_item_wrapper text-center">
   <h3 id="results_card_name"> ${item.name}</h3>
   <p> &pound;${item.price}</p>
@@ -32,7 +32,7 @@ function buildCarouselItem(item, active) {
       class="btn std_button mr-3 search_result_button"> View on their
       website</a>
     <a class="btn std_button btn-secondary ml-3 search_result_button track_btn"
-      id="track_button_1">Track</a>
+      id="track_button_${index==0? '1' : '2'}">Track</a>
   </div>
   </div>
   </div>`
@@ -131,12 +131,120 @@ function searchForItem(query) {
         for(i = 0; i < content.length; i++){
           item_wireframe = content[i]
           if(i == 0){
-            item = buildCarouselItem(item_wireframe, true)
+            item = buildCarouselItem(item_wireframe, 0)
           }
           else{
-            item = buildCarouselItem(item_wireframe, false)
+            item = buildCarouselItem(item_wireframe, 1)
           }
           $(".carousel-inner").append(item)
+          $("#track_button_1").on("click", function () {
+            new_item = { "name": null, "price": null, "stock": false, "source": null, "link": null }
+            // Get Data
+            parent = $(this).parent()
+            children = $(parent).children()
+            base_parent = $(parent).parent()
+            data = $(base_parent).children().slice(0, 4)
+            price = $(data[1]).text()
+            priceLen = price.length
+            price_edit = price.slice(1, priceLen)
+          
+            // Assign Data
+            new_item.name = $(data[0]).text()
+            new_item.price = price_edit
+            new_item.stock = $(data[2]).text() == " Stock Available " ? true : false
+            new_item.source = $(data[3]).text()
+            new_item.link = $(children[0]).attr("href")
+            
+            // Call AJAX Request
+            $.ajax({
+              type: 'POST',
+              headers: { "X-CSRFToken": token },
+              url: postTracked_api,
+              data: {
+                'content': new_item
+              },
+              success: function (response) {
+          
+                if (response.error) {
+                  $("#search_modal").modal()
+                  $("#modal_error").empty();
+                  $("#modal_error").append(`<p class="text-danger p4 h5">${response.error}</p>`)
+                  return true;
+                }
+                item = buildItemCard(response.item)
+                entry = $("#tracked_content").children()
+                entryLen = entry.length
+                entry = entry.slice(entryLen - 1, entryLen)
+          
+                // Check if row is full
+                if ($(entry).children().length < 3) {
+                  $(entry).append(item)
+                }
+                else {
+                  $("#tracked_content").append(`<div class="row mt-5" id="tracked_row"></div>`)
+                  $("#tracked_row").append(item)
+                }
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                alert("textStatus: " + textStatus + " " + errorThrown)
+              }
+            })
+          
+          })
+          $("#track_button_2").on("click", function() {
+            new_item = { "name": null, "price": null, "stock": false, "source": null, "link": null }
+            // Get Data
+            parent = $(this).parent()
+            children = $(parent).children()
+            base_parent = $(parent).parent()
+            data = $(base_parent).children().slice(0, 4)
+            price = $(data[1]).text()
+            priceLen = price.length
+            price_edit = price.slice(1, priceLen)
+          
+            // Assign Data
+            new_item.name = $(data[0]).text()
+            new_item.price = price_edit
+            new_item.stock = $(data[2]).text() == " Stock Available " ? true : false
+            new_item.source = $(data[3]).text()
+            new_item.link = $(children[0]).attr("href")
+            
+            console.log(`calling on ${this} for item ${new_item}`)
+            // Call AJAX Request
+            $.ajax({
+              type: 'POST',
+              headers: { "X-CSRFToken": token },
+              url: postTracked_api,
+              data: {
+                'content': new_item
+              },
+              success: function (response) {
+          
+                if (response.error) {
+                  $("#search_modal").modal()
+                  $("#modal_error").empty();
+                  $("#modal_error").append(`<p class="text-danger p4 h5">${response.error}</p>`)
+                  return true;
+                }
+                item = buildItemCard(response.item)
+                entry = $("#tracked_content").children()
+                entryLen = entry.length
+                entry = entry.slice(entryLen - 1, entryLen)
+          
+                // Check if row is full
+                if ($(entry).children().length < 3) {
+                  $(entry).append(item)
+                }
+                else {
+                  $("#tracked_content").append(`<div class="row mt-5" id="tracked_row"></div>`)
+                  $("#tracked_row").append(item)
+                }
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                alert("textStatus: " + textStatus + " " + errorThrown)
+              }
+            })
+          })
         }
 
         toggleGettingResults()
@@ -168,80 +276,21 @@ $("#searchClose").click(function () {
   $(".carousel-inner").empty()
 })
 
-function trackItem(content) {
-  $.ajax({
-    type: 'POST',
-    headers: { "X-CSRFToken": token },
-    url: postTracked_api,
-    data: {
-      'content': content
-    },
-    success: function (response) {
+// $("#track_button_2").on("click", function () {
+//   content = { "name": null, "price": null, "stock": false, "source": null, "link": null }
+//   // Get Data
+//   parent = $(this).parent()
+//   children = $(parent).children()
+//   base_parent = $(parent).parent()
+//   data = $(base_parent).children().slice(0, 4)
 
-      if (response.error) {
-        $("#search_modal").modal()
-        $("#modal_error").empty();
-        $("#modal_error").append(`<p class="text-danger p4 h5">${response.error}</p>`)
-        return true;
-      }
-      item = buildItemCard(response.item)
-      entry = $("#tracked_content").children()
-      entryLen = entry.length
-      entry = entry.slice(entryLen - 1, entryLen)
+//   // Assign Data
+//   content.name = $(data[0]).text()
+//   content.price = $(data[1]).text()
+//   content.stock = $(data[2]).text() == " Stock Available " ? true : false
+//   content.source = $(data[3]).text()
+//   content.link = $(children[0]).attr("href")
 
-      // Check if row is full
-      if ($(entry).children().length < 3) {
-        $(entry).append(item)
-      }
-      else {
-        $("#tracked_content").append(`<div class="row mt-5" id="tracked_row"></div>`)
-        $("#tracked_row").append(item)
-      }
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      alert("textStatus: " + textStatus + " " + errorThrown)
-    }
-  })
-}
-
-$("#track_button_1").click(function () {
-  content = { "name": null, "price": null, "stock": false, "source": null, "link": null }
-  // Get Data
-  parent = $(this).parent()
-  children = $(parent).children()
-  base_parent = $(parent).parent()
-  data = $(base_parent).children().slice(0, 4)
-  price = $(data[1]).text()
-  priceLen = price.length
-  price_edit = price.slice(1, priceLen)
-
-  // Assign Data
-  content.name = $(data[0]).text()
-  content.price = price_edit
-  content.stock = $(data[2]).text() == " Stock Available " ? true : false
-  content.source = $(data[3]).text()
-  content.link = $(children[0]).attr("href")
-
-  // Call AJAX Request
-  trackItem(content)
-
-})
-
-$("#track_button_2").click(function () {
-  content = { "name": null, "price": null, "stock": false, "source": null, "link": null }
-  // Get Data
-  parent = $(this).parent()
-  children = $(parent).children()
-  base_parent = $(parent).parent()
-  data = $(base_parent).children().slice(0, 4)
-
-  // Assign Data
-  content.name = $(data[0]).text()
-  content.price = $(data[1]).text()
-  content.stock = $(data[2]).text() == " Stock Available " ? true : false
-  content.source = $(data[3]).text()
-  content.link = $(children[0]).attr("href")
-
-  // Call AJAX Request
-  trackItem(content)
-})
+//   // Call AJAX Request
+//   trackItem(content)
+// })

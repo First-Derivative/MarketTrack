@@ -82,7 +82,6 @@ function getTrackedItems() {
             item = buildItemCard(item_wireframe)
             modal = buildDeleteFunc(item_wireframe)
 
-            $('#deleteForm').append(`<option name=${item_wireframe.id}>${item_wireframe.name}</option>`)
             item_list.push(item)
             modal_list.push(modal)
             id_list.push(item_wireframe.id)
@@ -141,6 +140,28 @@ function deleteItem(item_id) {
     }
   })
 }
+
+// Update Delete List
+$("#viewDeleteList").click(function() {
+  $("#deleteForm").empty()
+  
+  $.ajax({
+    type: "GET",
+    url: getTracked_api,
+    success: function (response) {
+      if(response.tracked_items){
+        content = response.tracked_items
+        content.reverse()
+        for(i=0; i< content.length; i++){
+          $('#deleteForm').append(`<option name=${content[i].id}>${content[i].name}</option>`)
+        }
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert("textStatus: " + textStatus + " " + errorThrown)
+    }
+  })
+})
 
 // Tracked: collection_display request
 function getCollections() {
