@@ -14,7 +14,11 @@ def search_api(request, query):
     sleep(3)
     return JsonResponse({"items":response})
   elif("corsair" in query.lower()):
-    return JsonResponse({"error":"got corsair"})
+    response = [
+      {"name":"CORSAIR Vengeance RGB Pro 16GB (2 x 8GB)", "price": "112.79", "stock_bool": "Stock Available", "abstract_source": "Newegg", "source": "https://www.newegg.com/global/uk-en/corsair-16gb-288-pin-ddr4-sdram/p/N82E16820236626?Description=Corsair%20Pro%20RAM%2016GB&cm_re=Corsair_Pro%20RAM%2016GB-_-20-236-626-_-Product&quicklink=true"},
+      {"name":"CORSAIR Vengeance LPX DDR4 3600MHz PC RAM - 8 GB x 2", "price": "95.00", "stock_bool": "Stock Unavailable", "abstract_source": "Currys", "source": "https://www.currys.co.uk/gbuk/computing-accessories/components-upgrades/computer-memory/corsair-vengeance-lpx-ddr4-3600mhz-pc-ram-8-gb-x-2-10198887-pdt.html"}]
+    sleep(1.8)
+    return JsonResponse({"items":response})
   return JsonResponse({"error":"No results for search {query}".format(query=query)})
 
 def resolveAbstractSource(item):

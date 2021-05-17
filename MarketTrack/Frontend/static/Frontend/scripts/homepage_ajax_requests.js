@@ -23,10 +23,10 @@ function buildItemCard(item) {
 function buildCarouselItem(item, index) {
   carousel_item = `<div class="carousel-item ${index==0 ? 'active' : ''}">
   <div class="carousel_item_wrapper text-center">
-  <h3 id="results_card_name"> ${item.name}</h3>
-  <p> &pound;${item.price}</p>
-  <p> ${item.stock_bool}</p>
-  <p> ${item.abstract_source}</p>
+  <h3 id="results_card_name">${item.name}</h3>
+  <p>&pound;${item.price}</p>
+  <p>${item.stock_bool}</p>
+  <p>${item.abstract_source}</p>
   <div class="d-flex flex-row justify-content-center">
     <a href="${item.source}"
       class="btn std_button mr-3 search_result_button"> View on their
@@ -138,6 +138,7 @@ function searchForItem(query) {
           }
           $(".carousel-inner").append(item)
           $("#track_button_1").on("click", function () {
+            // e.preventDefault()
             new_item = { "name": null, "price": null, "stock": false, "source": null, "link": null }
             // Get Data
             parent = $(this).parent()
@@ -147,14 +148,15 @@ function searchForItem(query) {
             price = $(data[1]).text()
             priceLen = price.length
             price_edit = price.slice(1, priceLen)
-          
+            
             // Assign Data
             new_item.name = $(data[0]).text()
             new_item.price = price_edit
-            new_item.stock = $(data[2]).text() == " Stock Available " ? true : false
+            new_item.stock = $(data[2]).text() == "Stock Available" ? true : false
             new_item.source = $(data[3]).text()
             new_item.link = $(children[0]).attr("href")
             
+            console.log(`calling on ${this} for item`, new_item)
             // Call AJAX Request
             $.ajax({
               type: 'POST',
@@ -205,11 +207,12 @@ function searchForItem(query) {
             // Assign Data
             new_item.name = $(data[0]).text()
             new_item.price = price_edit
-            new_item.stock = $(data[2]).text() == " Stock Available " ? true : false
+            new_item.stock = $(data[2]).text() == "Stock Available" ? true : false
             new_item.source = $(data[3]).text()
             new_item.link = $(children[0]).attr("href")
             
-            console.log(`calling on ${this} for item ${new_item}`)
+            console.log(`calling on ${this} for item`, new_item)
+            console.log(`data[2].text is`, $(data[2]).text())
             // Call AJAX Request
             $.ajax({
               type: 'POST',
@@ -267,6 +270,7 @@ $("#search_button").click(function () {
   }
   else{
     toggleGettingResults()
+    $(".carousel-inner").empty()
     searchForItem(query)
   }
 })
@@ -275,22 +279,3 @@ $("#searchClose").click(function () {
   hideResults()
   $(".carousel-inner").empty()
 })
-
-// $("#track_button_2").on("click", function () {
-//   content = { "name": null, "price": null, "stock": false, "source": null, "link": null }
-//   // Get Data
-//   parent = $(this).parent()
-//   children = $(parent).children()
-//   base_parent = $(parent).parent()
-//   data = $(base_parent).children().slice(0, 4)
-
-//   // Assign Data
-//   content.name = $(data[0]).text()
-//   content.price = $(data[1]).text()
-//   content.stock = $(data[2]).text() == " Stock Available " ? true : false
-//   content.source = $(data[3]).text()
-//   content.link = $(children[0]).attr("href")
-
-//   // Call AJAX Request
-//   trackItem(content)
-// })
