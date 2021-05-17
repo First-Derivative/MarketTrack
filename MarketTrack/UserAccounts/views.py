@@ -23,13 +23,12 @@ def userRegister(request):
     if(form.is_valid()):
       
       #Validating form and data using DjangoValidation
-      form.save()
+      user = form.save()
       email = form.cleaned_data.get("email")
       raw_password = form.cleaned_data.get("password1")
   
       #Attempt login
-      account = authenticate(email=email, password=raw_password)
-      login(request, account)
+      login(request, user)
       return redirect("homepage")
 
     else:

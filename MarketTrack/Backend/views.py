@@ -4,9 +4,18 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 
 from UserAccounts.models import UserAccount
 from Frontend.models import *
+from time import sleep
 
 def search_api(request, query):
-  return HttpResponse(status=200)
+  if("samsung" in query.lower()):
+    response = [
+      {"name":"SAMSUNG 870 QVO 1TB 2.5\" SATA III", "price": "103.20", "stock_bool": "Stock Available", "abstract_source": "Newegg", "source": "https://www.newegg.com/global/uk-en/samsung-1tb-870-qvo-series/p/2WA-003Z-00382?Description=Samsung%20Qvo%201TB&cm_re=Samsung_Qvo%201TB-_-2WA-003Z-00382-_-Product&quicklink=true"},
+      {"name":"SAMSUNG QVO 870 2.5\" Internal SSD - 1 TB", "price": "99.99", "stock_bool": "Stock Available", "abstract_source": "Currys", "source": "https://www.currys.co.uk/gbuk/computing-accessories/data-storage/solid-state-drives/samsung-qvo-870-2-5-internal-ssd-1-tb-10218693-pdt.html"}]
+    sleep(3)
+    return JsonResponse({"items":response})
+  elif("corsair" in query.lower()):
+    return JsonResponse({"error":"got corsair"})
+  return JsonResponse({"error":"No results for search {query}".format(query=query)})
 
 def resolveAbstractSource(item):
   choice = item.abstract_source
@@ -146,8 +155,9 @@ def getItemDataset(request, item_id):
   if(request.method == "GET"):
     try:
       item_queryset = PermanentTrack.objects.all().filter(item=item_id).order_by('timestamp')
-      if(len(item_queryset)== 0):
-        return JsonResponse({"error":"Not enough data for tracked item for statistics display"})
+      if(len(item_queryset) < 5):
+        name = Item.objects.get(id=item_id).name
+        return JsonResponse({"error":"Not enough data for {name} for statistics display".format(name=name)})
       response = serializeItemDataset(item_queryset)
       return JsonResponse({"itemSet": response})
     except PermanentTrack.DoesNotExist:

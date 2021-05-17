@@ -20,6 +20,26 @@ function buildItemCard(item) {
   return item_card
 }
 
+function buildCarouselItem(item, active) {
+  carousel_item = `<div class="carousel-item ${active ? 'active' : ''}">
+  <div class="carousel_item_wrapper text-center">
+  <h3 id="results_card_name"> ${item.name}</h3>
+  <p> &pound;${item.price}</p>
+  <p> ${item.stock_bool}</p>
+  <p> ${item.abstract_source}</p>
+  <div class="d-flex flex-row justify-content-center">
+    <a href="${item.source}"
+      class="btn std_button mr-3 search_result_button"> View on their
+      website</a>
+    <a class="btn std_button btn-secondary ml-3 search_result_button track_btn"
+      id="track_button_1">Track</a>
+  </div>
+  </div>
+  </div>`
+
+  return carousel_item
+}
+
 // Homepage: tracked_display requests 
 function getTrackedItems(obj) {
 
@@ -42,6 +62,8 @@ function getTrackedItems(obj) {
           max = 0
           item_list = []
           loopCond = true
+
+          // Make Sure no more than 3 items get appended per row
           while (loopCond) {
             item_wireframe = content.pop()
             item = buildItemCard(item_wireframe)
@@ -51,6 +73,7 @@ function getTrackedItems(obj) {
             if (max == 3) { loopCond = false; }
 
           }
+          // Remaining items get appended on rows
           for (j = 0; j < item_list.length; j++) {
             $(row_identifier).append(item_list[j])
           }
@@ -64,18 +87,85 @@ function getTrackedItems(obj) {
   })
 }
 
-function toggleResults() {
+function hideResults() {
   row = "#search_results_row"
   if ($(row).hasClass("hidden")) {
+    return true;
+  }
+  $(row).addClass("hidden")
+}
+
+function showResults() {
+  row = "#search_results_row"
+  if ($(row).hasClass("hidden")) {
+    $(row).removeClass("hidden")
+    return true;
+  }
+}
+
+function toggleGettingResults(){
+  row = "#gettingResults"
+  if($(row).hasClass("hidden")){
     $(row).removeClass("hidden")
     return true;
   }
   $(row).addClass("hidden")
 }
 
+function searchForItem(query) {
+  url_search = searchItem_api.replace("0", query)
+  $.ajax({
+    type: "GET",
+    url: url_search,
+    success: function (response) {
+      if (response.error) {
+        $("#search_modal").modal()
+        $("#modal_error").empty();
+        $("#modal_error").append(`<p class="text-danger p4 h5">${response.error}</p>`)
+        return true;
+      }
+
+      if(response.items){
+        $()
+        content = response.items
+        for(i = 0; i < content.length; i++){
+          item_wireframe = content[i]
+          if(i == 0){
+            item = buildCarouselItem(item_wireframe, true)
+          }
+          else{
+            item = buildCarouselItem(item_wireframe, false)
+          }
+          $(".carousel-inner").append(item)
+        }
+
+        toggleGettingResults()
+        showResults()
+      }
+
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert("textStatus: " + textStatus + " " + errorThrown)
+    }
+  })
+}
+
 $("#search_button").click(function () {
-  // searchForItem()
-  toggleResults()
+  query = $("#search_bar").val()
+  if(query == ""){
+    $("#search_modal").modal()
+    $("#modal_error").empty();
+    $("#modal_error").append(`<p class="text-danger p4 h5">Can't search for empty input</p>`)
+  }
+  else{
+    toggleGettingResults()
+    searchForItem(query)
+  }
+})
+
+$("#searchClose").click(function () {
+  hideResults()
+  $(".carousel-inner").empty()
 })
 
 function trackItem(content) {
@@ -91,7 +181,7 @@ function trackItem(content) {
       if (response.error) {
         $("#search_modal").modal()
         $("#modal_error").empty();
-        $("#modal_error").append(`<p class="text-danger">${response.error}</p>`)
+        $("#modal_error").append(`<p class="text-danger p4 h5">${response.error}</p>`)
         return true;
       }
       item = buildItemCard(response.item)

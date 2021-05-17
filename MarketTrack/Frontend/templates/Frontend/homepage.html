@@ -26,6 +26,13 @@
 
 </div>
 
+<div class="row mt-4 hidden" id="gettingResults">
+  <div class="col-md-1"></div> <!-- Empty for Spacing -->
+  <div class="col-md-10">
+    <h5 class="color_supp">Getting Results...</h5>
+  </div>
+  <div class="col-md-1"></div> <!-- Empty for Spacing -->
+</div>
 <!-- Search Results Entry -->
 
 <div class="row mt-4 hidden" id="search_results_row">
@@ -33,7 +40,11 @@
   <div class="col-md-1"></div> <!-- Empty for Spacing -->
 
   <div class="col-md-10">
-    <h5 class="color_supp">Results...</h5>
+
+    <div class="d-flex flex-row justify-content-between">
+      <h5 class="color_supp">Results...</h5>
+      <h5 class="text-danger ptr" id="searchClose">X</h5>
+    </div>
     <div class="carousel slide" id="results_carousel" data-ride="carousel">
 
       <!-- Carousel Indicators -->
@@ -46,7 +57,7 @@
       <!-- Carousel Item Display -->
       <div class="carousel-inner" id="carousel_wrapper">
 
-        <!-- Carousel Item 1-->
+        {% comment %} <!-- Carousel Item 1-->
         <div class="carousel-item active">
           <div class="carousel_item_wrapper text-center">
             <h3 id="results_card_name"> SAMSUNG 870 QVO 1TB 2.5" SATA III</h3>
@@ -80,7 +91,7 @@
                 id="track_button_2">Track</a>
             </div>
           </div>
-        </div>
+        </div> {% endcomment %}
 
       </div>
 
@@ -99,6 +110,7 @@
       </a>
 
     </div>
+
   </div>
   <div class="col-md-1"></div> <!-- Empty for Spacing -->
 </div>
@@ -128,7 +140,7 @@
 <!-- Modal for Search Display -->
 <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="search_modal">
   <div class="modal-dialog modal-sm">
-    <div class="modal-content p-3 px-4" id="modal_error" style="width: 18rem;"> 
+    <div class="modal-content p-3 px-4 text-center" id="modal_error" style="width: 24rem;"> 
     </div>
   </div>
 </div>
@@ -137,6 +149,7 @@
 <script>
   let getTracked_api = "{% url 'getTracked_api' %}"
   let postTracked_api = "{% url 'postTracked_api' %}"
+  let searchItem_api = "{% url 'searchItem_api' 0 %}"
   let token = '{{csrf_token}}'
 </script>
 

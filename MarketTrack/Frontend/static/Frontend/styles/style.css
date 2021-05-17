@@ -234,7 +234,7 @@ html, body
 .model-content, .modal_delete
 {
   width: 30rem;
-  height: 17rem;
+  height: 19rem;
 }
 
 label 
@@ -259,3 +259,4 @@ label
 {
   max-width: 21rem;
 }
+

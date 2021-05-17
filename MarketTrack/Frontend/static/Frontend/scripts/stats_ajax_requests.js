@@ -53,7 +53,7 @@ $("#stats_button_1").click(function () {
       if (response.error) {
         $("#stats_modal").modal()
         $("#modal_error").empty();
-        $("#modal_error").append(`<p class="text-danger">${response.error}</p>`)
+        $("#modal_error").append(`<p class="text-danger p4 h4">${response.error}</p>`)
         return true;
       }
 
@@ -80,7 +80,7 @@ $("#stats_button_2").click(function () {
       if (response.error) {
         $("#stats_modal").modal()
         $("#modal_error").empty();
-        $("#modal_error").append(`<p class="text-danger">${response.error}</p>`)
+        $("#modal_error").append(`<p class="text-danger p4 h4">${response.error}</p>`)
         return true;
       }
 
