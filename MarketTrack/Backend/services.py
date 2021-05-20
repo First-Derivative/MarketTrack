@@ -220,5 +220,3 @@ def test():
   print("item.text", item.text)
 
   exitDriver(driver)
-
-search_scrape("Corsair 16GB RAM", "currys")
