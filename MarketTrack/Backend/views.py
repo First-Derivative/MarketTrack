@@ -1,25 +1,20 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.contrib.auth.decorators import login_required, user_passes_test
-
+from services import search_scrape
 from UserAccounts.models import UserAccount
 from Frontend.models import *
 from time import sleep
 
 def search_api(request, query):
-  if("samsung" in query.lower()):
-    response = [
-      {"name":"SAMSUNG 870 QVO 1TB 2.5\" SATA III", "price": "103.20", "stock_bool": "Stock Available", "abstract_source": "Newegg", "source": "https://www.newegg.com/global/uk-en/samsung-1tb-870-qvo-series/p/2WA-003Z-00382?Description=Samsung%20Qvo%201TB&cm_re=Samsung_Qvo%201TB-_-2WA-003Z-00382-_-Product&quicklink=true"},
-      {"name":"SAMSUNG QVO 870 2.5\" Internal SSD - 1 TB", "price": "99.99", "stock_bool": "Stock Available", "abstract_source": "Currys", "source": "https://www.currys.co.uk/gbuk/computing-accessories/data-storage/solid-state-drives/samsung-qvo-870-2-5-internal-ssd-1-tb-10218693-pdt.html"}]
-    sleep(3)
-    return JsonResponse({"items":response})
-  elif("corsair" in query.lower()):
-    response = [
-      {"name":"CORSAIR Vengeance RGB Pro 16GB (2 x 8GB)", "price": "112.79", "stock_bool": "Stock Available", "abstract_source": "Newegg", "source": "https://www.newegg.com/global/uk-en/corsair-16gb-288-pin-ddr4-sdram/p/N82E16820236626?Description=Corsair%20Pro%20RAM%2016GB&cm_re=Corsair_Pro%20RAM%2016GB-_-20-236-626-_-Product&quicklink=true"},
-      {"name":"CORSAIR Vengeance LPX DDR4 3600MHz PC RAM - 8 GB x 2", "price": "95.00", "stock_bool": "Stock Unavailable", "abstract_source": "Currys", "source": "https://www.currys.co.uk/gbuk/computing-accessories/components-upgrades/computer-memory/corsair-vengeance-lpx-ddr4-3600mhz-pc-ram-8-gb-x-2-10198887-pdt.html"}]
-    sleep(1.8)
-    return JsonResponse({"items":response})
-  return JsonResponse({"error":"No results for search {query}".format(query=query)})
+  newegg_query = search_scrape(query, "newegg")
+  currys_query = search_scrape(query, "currys")
+
+  if("error" in newegg_query.keys() and "error" in currys_query.keys()):
+    return JsonResponse({"error":"No results for search {query}".format(query=query)})
+  
+  response = {newegg_query, currys_query}
+  return JsonResponse({"items":response})
 
 def resolveAbstractSource(item):
   choice = item.abstract_source
@@ -120,14 +115,13 @@ def addTrackedItem(request):
           abstractChoice = choice
       
       price = post["content[price]"]
-      price = price.strip(" ")
-      price = price[1:]
       stock_bool = False
       if(post["content[stock]"] == "true"):
         stock_bool = True
 
       # Create Item & Tracked
       item = Item(name=post["content[name]"], source=post["content[link]"], abstract_source= abstractChoice, price=price, stock_bool=stock_bool, timestamp= datetime.now())
+      print("Saving Item: {item} with price {price}".format(item=item, price=item.price))
       item.save()
       
       serializedItem = serializeItem(item)

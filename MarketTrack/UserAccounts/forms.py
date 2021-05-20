@@ -13,21 +13,25 @@ class RegisterForm(UserCreationForm):
   username = forms.CharField(max_length=30, help_text="This is what you'll use to login",widget=forms.TextInput(attrs={
   "placeholder": "RockstarJeans3500",
   "class": "form-control std_input",
+  "id": "register_username",
   }))
 
   email = forms.CharField(max_length=50, widget=forms.EmailInput(attrs={
-    "placeholder": "jacque@webster.com",
-    "class": "form-control std_input",
-    }))
+  "placeholder": "jacque@webster.com",
+  "class": "form-control std_input",
+  "id": "register_email",
+  }))
 
   password1 = forms.CharField(widget=forms.PasswordInput(attrs={
   "placeholder": "Password",
   "class": "form-control std_input",
+  "id": "register_pass1",
   }))
 
   password2 = forms.CharField(widget=forms.PasswordInput(attrs={
   "placeholder": "Confirm Password",
   "class": "form-control std_input",
+  "id": "register_pass2",
   }))
 
 
@@ -45,10 +49,12 @@ class LoginForm(ModelForm):
 
   username = forms.CharField(max_length=50,widget=forms.TextInput(attrs={
     "class": "form-control std_input",
+    "id": "login_username",
   }))
 
   password = forms.CharField(widget=forms.PasswordInput(attrs={
     "class": "form-control std_input",
+    "id": "login_password",
   }))
 
 

@@ -133,5 +133,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CRON JOBS 
 CRONJOBS = [
-    ('30 * * * *', 'myapp.Backend.scheduledScrapes')
+    ('30 * * * *', 'Backend.services.scheduledScrapes')
 ]
